@@ -1,39 +1,4 @@
-Learning Behavior Trees for Autonomous Agents
-with Hybrid Constraints Evolution
-Qi Zhang ID , Jian Yao, Quanjun Yin * and Yabing Zha
-College of Systems Engineering, National University of Defense Technology, Changsha 410073, Hunan, China;
-zhangqiy123@nudt.edu.cn (Q.Z.); markovyao@163.com (J.Y.); zhayabing@nudt.edu.cn (Y.Z.)
-* Correspondence: yinquanjun@nudt.edu.cn; Tel.: +86-0731-8450-6327
-Received: 7 May 2018; Accepted: 28 June 2018; Published: 3 July 2018
-
-
-
-
-Featured Application: The proposed approach can learn transparent behavior models represented
-as Behavior Trees, which could be used to alleviate the heaven endeavor of manual agent
-programming in game and simulation.
-Abstract: In modern training, entertainment and education applications, behavior trees (BTs)
-have already become a fantastic alternative to finite state machines (FSMs) in modeling and
-controlling autonomous agents. However, it is expensive and inefficient to create BTs for various
-task scenarios manually. Thus, the genetic programming (GP) approach has been devised to evolve
-BTs automatically but only received limited success. The standard GP approaches to evolve BTs fail
-to scale up and to provide good solutions, while GP approaches with domain-specific constraints
-can accelerate learning but need significant knowledge engineering effort. In this paper, we propose
-a modified approach, named evolving BTs with hybrid constraints (EBT-HC), to improve the evolution
-of BTs for autonomous agents. We first propose a novel idea of dynamic constraint based on frequent
-sub-trees mining, which can accelerate evolution by protecting preponderant behavior sub-trees
-from undesired crossover. Then we introduce the existing ‘static’ structural constraint into our
-dynamic constraint to form the evolving BTs with hybrid constraints. The static structure can
-constrain expected BT form to reduce the size of the search space, thus the hybrid constraints would
-lead more efficient learning and find better solutions without the loss of the domain-independence.
-Preliminary experiments, carried out on the Pac-Man game environment, show that the hybrid
-EBT-HC outperforms other approaches in facilitating the BT design by achieving better behavior
-performance within fewer generations. Moreover, the generated behavior models by EBT-HC are
-human readable and easy to be fine-tuned by domain experts.
-Keywords: Behavior Trees (BTs); Genetic Programming (GP); autonomous agents; behavior modeling;
-tree mining
-
-1. Introduction
+1.Introduction
 Modern training, entertainment and education applications make extensive use of autonomously
 controlled virtual agents or physical robots [1]. In these applications, the agents must display
 complex intelligent behaviors to carry out given tasks. Until recently, those behaviors have always
@@ -43,14 +8,6 @@ facing multiple types of agents, missions or scenarios, but also result in rigid
 agent behaviors [2,3]. An alternative way is using machine learning (ML) techniques to generate
 agent behaviors automatically [1,4,5]. Through providing sample traces or evaluation criterion
 of experts’ desired behavior, an agent can learn behavior model from expert demonstration or
-Appl. Sci. 2018, 8, 1077; doi:10.3390/app8071077
-
-www.mdpi.com/journal/applsci
-
-Appl. Sci. 2018, 8, 1077
-
-2 of 22
-
 trial-and-error experience respectively. Nevertheless, pure ML approaches, like neuron network (NN)
 or reinforcement learning (RL), usually generate behavior models as black box systems, which are
 difficult for domain experts to understand, validate and modify [6,7].
@@ -98,11 +55,6 @@ Finally, Section 5 draws conclusions and suggests directions for future research
 2. Background and Related Works
 In this section, we recall behavior trees and genetic programming as our necessary research
 background, and review some related works of agent behavior modeling and evolving behavior trees.
-
-Appl. Sci. 2018, 8, 1077
-
-3 of 22
-
 2.1. Behavior Trees
 A behavior tree can be regarded as a hierarchical plan representation and decision-making tool
 to encode autonomous agent behavior. It is an intuitive alternative to FSM with modularity and
@@ -133,9 +85,7 @@ state. Only if all children return Success, the Sequence returns Success.
 Action: The action node performs a primitive behavior, returning success if the action is completed
 and f ailure if the action cannot be completed. Otherwise it returns running.
 Figure 1 shows the graphical representation of all types of nodes used in this paper.
-
 Figure 1. The graphical representation of a behavior tree nodes used.
-
 2.2. Genetic Programming
 Genetic programming is a specialization of genetic algorithms which performs a stochastic
 search to solve a particular task inspired by Darwin’s theories of evolution [15,16]. In GP, each
@@ -148,11 +98,6 @@ task. For a BT controller, possible states related to decision-making are encode
 available primitive actions in the task are encoded as action nodes, decision-making logic is controlled
 by BT composite nodes (such as selector, sequence or parallel), a behavior policy is a tree individual
 with ordered composition of control nodes and leaf nodes.
-
-Appl. Sci. 2018, 8, 1077
-
-4 of 22
-
 For BT populations, individuals are evolved using genetic operations of reproduction, crossover,
 and mutation. In each iteration of the algorithm, some fitter individuals are selected for
 reproduction directly. Some individuals take crossover operation where a random sub-tree from
@@ -202,11 +147,6 @@ for certain situation. Therefore, for evolving BTs, the scalability is still an 
 from the random large space search [12,14]. In [12], the author points out it is too flexible for evolving
 BTs without structural guidelines, which would result in most trees that are quite inefficient and
 impossible to read. So the author constrains the crossover with fixed ’behavior block’ sub-trees, which
-
-Appl. Sci. 2018, 8, 1077
-
-5 of 22
-
 yield comparable reactive behavior. In [14], the authors investigate the effect of ’standard BT design’
 constraint on evolving BTs approach, which is domain-independent and efficient. They also point
 out most existing evolving BT approaches adopt different manual constraints to design what the BTs
@@ -234,13 +174,6 @@ which can avoid many meaningless and inefficient tree configurations in evolutio
 dynamic constraint, it first applies frequent sub-trees mining for a few higher ranked individuals in
 each generation, then adjusts nodes crossover probabilities based on the extracted frequent sub-trees,
 which can protect preponderant structures against undesirable crossover.
-
-Figure 2. The proposed evolving behavior tree framework, behavior tree (BT).
-
-Appl. Sci. 2018, 8, 1077
-
-6 of 22
-
 In detail, the workflow of the proposed EBT-HC for agent behavior modeling can be described
 as follows:
 At first, the GP system creates initial BT population individuals under static structural constraint.
@@ -289,11 +222,6 @@ construct candidate frequent patterns incrementally. At the same time, frequenci
 are computed by maintaining only the occurrences of the rightmost leaf efficiently. It has been
 demonstrated that FREQT can scale almost linearly in the total size of maximal tree patterns slightly
 depending on the size of the longest pattern [28,29].
-
-Appl. Sci. 2018, 8, 1077
-
-7 of 22
-
 A labeled ordered tree usually represents a semi-structured data structure such as XML.
 According to the structure and semantics, a behavior tree is a typical labeled ordered tree. Thus the
 formalism of BT can be expanded from definition of LOT as BTLOT =< V, E, τ, L, >, where
@@ -313,17 +241,11 @@ frequent pattern tree Tp in tree T.
 To adapt the notions from FREQT to BTs mining in GP system, we modify the rules to judge
 whether a sub-tree is frequent. According to BT syntax and its design pattern, a tree Tp can be regarded
 as a frequent pattern iff it satisfies all the following proposed rules.
-1.
-
-2.
-3.
-
 σ( Tp )/| TD | > σmin and NTpmin < | Tp | < NTpmax , where σmin depicts the minimal support of
 a frequent pattern, NTpmin depicts the minimal node size of a frequent pattern and NTpmax depicts
 the maximal node size of a frequent pattern.
 All terminal nodes in a frequent pattern | Tp | must be leaf nodes (condition nodes or action nodes).
 nt ( Tp ) > NTptmin , where NTptmin depicts the minimal terminal node size of a frequent pattern.
-
 Rule 1 is the basic requirement of FREQT data mining algorithms. Rule 2 and rule 3 represent
 proposed form requirements of expected patterns in behavior modeling with BT. As a decision
 making tool, the core of a BT is rooted in the logic relation among its leaf nodes. Thus, in rule 2,
@@ -348,18 +270,10 @@ and the other node set V neu ( T ) = V ( T ) \ (V r ( T ) ∪ V in ( T )). To pr
 more likely in crossover, we can classify V ( T ) to two sets, protected nodes set Vpro ( T ) and unprotected
 nodes set Vunpro ( T ). That is, Vpro ( T ) = V in ( T ), which stores nodes needing to be protected in T,
 and Vunpro ( T ) = V r ( T ) ∪ V neu ( T ), which stores nodes to be unprotected in T.
-
-Appl. Sci. 2018, 8, 1077
-
-8 of 22
-
 Obviously, to protect preponderant sub-trees inherited to the next generation, we should decrease
 the select probability of nodes in Vpro ( T ) and increase the select probability of nodes in Vunpro ( T )
 as crossover point. We consider the fact that standard sub-tree crossover operation produce two
 child trees, as illustrated in Figure 3.
-
-Figure 3. The proposed crossover operation with frequent sub-trees.
-
 As we can see in the leftup parent tree, except the root node, its nodes are classified to unprotected
 nodes and protected nodes enclosed with two dashed curves respectively. The mined frequent sub-tree
 is enclosed with a non-dashed curve including all the protected nodes and the root node of the
@@ -368,12 +282,9 @@ The GP system picks up two individuals (e.g., by a tournament selection) from th
 and performs a crossover operation at a node v with the probability pcross (v), which has been modified
 and normalized as follows:
 pcross (v) =
-
 γ
 |Vpro ( T )| + |Vunpro ( T )|
-
 v ∈ Vpro ( T )
-
 1− γ
 ∗ |Vpro ( T )|
 1
@@ -382,13 +293,9 @@ pcross (v) =
 +
 |Vpro ( T )| + |Vunpro ( T )|
 |Vunpro ( T )|
-
 (1)
-
 v ∈ Vunpro ( T )
-
 (2)
-
 where γ depicts the discount factor, which control the select probability preference for nodes in the
 protected nodes set.
 In Figure 3, the light protected nodes have more chance to be selected in crossover, node ‘A4’ with
@@ -403,11 +310,6 @@ to accelerate evolution, we found it cannot achieve expected performance in some
 For standard evolving BT approach, the global random crossover and mutation result in dramatically
 growing trees with many nonsensical branches. Therefore, it is hard for the standard evolving BT
 approach to escape from the local minimum, and some frequent patterns found may be inefficient
-
-Appl. Sci. 2018, 8, 1077
-
-9 of 22
-
 with inactive nodes never to be executed. In this section, we extend our dynamic constraint
 with the existing static structural constraint [14]. The static constraint sets structural guideline for
 generated BTs in initiation and crossover, the dynamic constraint adjusts nodes crossover probability
@@ -415,23 +317,15 @@ to protect preponderant structure based on constrained configuration space, whic
 efficient learning.
 The static structural constraint is referred from paper [14], which enforce following tree rules as
 ‘standard behavior tree design’:
-•
-•
-•
-
 Selector node may only be placed at depth levels that are even.
 Sequence node may only be placed at depth levels that are odd.
 All terminal child nodes of a node must be adjacent, and those child nodes must be one or more
 condition nodes followed by on or more action nodes. If there is only one terminal child node,
 it must be an action node.
-
 Figure 4 is an example generated BT using above static structural constraint. The generated initial
 BT individuals are efficient and well understood. To ensure the static structural constraint conformed
 in evolution, the adjacent terminal child nodes of a node will be regarded as a sequential block to
 swap together.
-
-Figure 4. An example behavior tree designed using static structural constraint.
-
 To combine dynamic constraint with static structural constraint in evolution, the following two
 points should be taken into account for Section 3.2:
 1. The available selected units are changed in evolving BTs with hybrid constraint.
@@ -452,11 +346,6 @@ selector or terminal block.
 After modifying the candidate nodes in step 1, the crossover probability of nodes should be
 adjusted accordingly in Section 3.2.2. It should be noted that iff all nodes in a sequential block are in
 a frequent sub-tree found, the block can be protected.
-
-Appl. Sci. 2018, 8, 1077
-
-10 of 22
-
 4. Experimental Section
 In this section, a series of experiments are carried out in the Pacman AI open-source benchmark
 to test the performance of our approach in agent behavior modeling. The experiments are run single
@@ -481,9 +370,6 @@ quite complex, making it a suitable candidate for the experiments. The scoring m
 as follows: eating a normal pill earns Pac-Man 10 points, eating a power pill earns Pac-Man 50 points,
 and eating ghosts earn 200 points for the first ghost but doubling each time up to 1600 points for the
 fourth ghost.
-
-Figure 5. The benchmark ‘Ms. Pac-Man vs. Ghosts’ used in the experiments.
-
 To test our evolving BTs approach for agent behavior modeling, we integrate behavior trees and
 genetic programming into the ‘Ms Pac-Man vs Ghost’ API to model Pac-Man behavior. The ghosts are
 controlled by the basic script provided in the competition, in which ghosts can communicate to share
@@ -493,13 +379,6 @@ action nodes. So the function set in GP contains ‘sequence’ and ‘selector�
 several game-related conditions and actions. At each time step, the game environment requests a single
 move (up, down, left, right, no move) from the AI agent, which is returned by executing the behavior
 tree. The actions and conditions are defined as [14], which can be implemented easily by API provided:
-
-Appl. Sci. 2018, 8, 1077
-
-•
-
-11 of 22
-
 Conditions
 isInedibleGhostCloseVLow/Low/Med/High/V High/Long, six condition nodes which return
 ‘true’ if there is a ghost in the ‘Inedible’ state within a certain fixed distance range, as well as
@@ -512,9 +391,6 @@ condition node has targeted a ghost, which is edible and whose remaining time in
 state is within a certain fixed range.
 isGhostScoreHigh/V High/Max, three condition nodes which return ‘true’ if the current point
 value for eating a ghost is 400/800/1600.
-
-•
-
 Actions
 moveToEatAnyPill: an action node which set Pac-Man’s direction to the nearest pill or power pill,
 returning ‘true’ if any such pill exists in the level or ‘false’ otherwise.
@@ -528,9 +404,6 @@ or ‘false’ otherwise.
 moveTowardsGhost: an action node which set Pac-Man’s direction towards the ghost that was
 targeted in the last condition node executed, returning ‘true’ if a ghost has been targeted or
 ‘false’ otherwise.
-
-•
-
 Fitness Function
 The fitness function is the sum of averaged game score and a parsimony pressure value as
 formula f p ( x ) = f ( x ) − cl ( x ) [16]. Where x is the evaluated BT, f p ( x ) is the fitness value, f ( x ) is
@@ -538,7 +411,6 @@ the averaged game score for a few game runs, c is a constant value known as the 
 coefficient, l ( x ) is the node size of x. The simple parsimony pressure can adjust the original fitness
 based on the size of BT, which will increase the tendency for more compact tree to be selected
 for reproduction.
-
 4.2. Experimental Setup
 In the experiments, four evolving BTs approaches with different constraints are implemented
 to make comparison. Those are standard evolving BTs, evolving BTs with static constraint, evolving
@@ -548,11 +420,6 @@ manually in order to provide a baseline comparison, which is provided by the com
 The handcrafted BT follows some simple sequential rules: initially checking if any inedible ghosts
 were too close and moving away from them before moving to chase nearby edible ghosts. If there are
 no ghosts within range, Pac-Man would travel to the closest pill.
-
-Appl. Sci. 2018, 8, 1077
-
-12 of 22
-
 The parameter settings for four evolving BTs approaches are listed as Table 1. Please note that all
 four approaches use crossover operator to produce two child trees from two parent trees. The main
 differences are the crossover node select and mutation probability as follows. For the approach EBT,
@@ -584,59 +451,43 @@ experimental results for all the evolving approaches.
 Table 1. Parameter settings for different tested approaches, evolving BTs with only dynamic constraint
 (EBT-DC), evolving BTs with hybrid constraints (EBT-HC).
 Approach
-
 Parameter
-
 Value
-
 fixed to all approaches
-
 population size
 generations
 initial min depth
 initial max depth
 selection tournament size
 parsimony coefficient
-
 100
 100
 2
 3
 5%
 0.7
-
 variable to all approaches
-
 new chromosomes
 crossover probability
 reproduction probability
 mutation probability
-
 10/20/30%
 0.6/0.7/0.8/0.9
 0.4/0.3/0.2/0.1
 0.01/0.1
-
 EBT-DC/EBT-HC
-
 superior individuals
 the minimal support σmin
 the minimal node size NTpmin
 the maximal node size NTpmin
 the minimal terminal node size NTptmin
 the discount factor γ
-
 50%
 0.3
 3
 15
 2
 0.9
-
-Appl. Sci. 2018, 8, 1077
-
-13 of 22
-
 For each evolving approach, agents are trained for 100 generations with corresponding
 configuration and the resulting BT with highest averaged fitness is then played 1000 game runs.
 Please note that in each generation, each individual is evaluated for 100 game runs to get an expected
@@ -682,28 +533,18 @@ chromosomes grow to 0.2 and 0.3, the EBT-HC learns faster at early stage of gene
 stage of generation 60, and finaly achieve a slight higher final best fitness than EBT-SC. The results
 show that the dynamic constraint can accelerate learning of EBT and get a better final best fitness,
 while for EBT-SC, it can help to accelerate learning in new chromosomes 0.2 and 0.3.
-
-Appl. Sci. 2018, 8, 1077
-
-14 of 22
-
 Table 2. Mean and standard deviation of the best individual of four evolving approaches under
 different parameters settings. The mean and standard deviation of the baseline handcrafted BT are
 5351.3 and 47.6 (with 95% confidence interval), evolving BTs approach (EBT), existing ‘static’ structural
 constraint (EBT-SC).
 EBT-DC
-
 EBT-SC
-
 EBT-HC
-
 Crossover probability
-
 0.6
 0.7
 0.8
 0.9
-
 6011.8 ± 320.2
 5768.0 ± 341.6
 5781.7 ± 267.9
@@ -1033,10 +874,6 @@ Generation
 
 Figure 7. Learning curves of different approaches with variable new chromosomes 0.1, 0.2 and 0.3.
 
-Appl. Sci. 2018, 8, 1077
-
-15 of 22
-
 In Figure 8 we can see that, when the mutation probability is 0.01, the EBT-DC learns faster than
 EBT and converges to a higher mean best fitness in the end of evolution. For the EBT-HC, it climbs
 faster than EBT-SC within generation 10 and gets a comparable mean best fitness. When the mutation
@@ -1149,8 +986,6 @@ Hand
 
 Generation
 
-Figure 8. Learning curves of different approaches with variable mutation probability 0.01 and 0.1.
-
 On the whole, in most tested GA parameters, the dynamic constraint can help standard evolving
 BT and evolving approach with static constraint to accelerate learning speed and achieve better
 individuals with higher final fitness.
@@ -1170,10 +1005,6 @@ respectively, and lower standard deviation of 224.0, 218 and 258.2 than the EBT-
 and 402.2 respectively. In the boxplot Figure 9 we also can see that, the whole distribution of all the
 individuals in EBT-HC is above the distribution in EBT-SC. All three lower adjacent values in EBT-HC
 are higher than the lower whiskers in EBT-SC, which indicates the lowest individual in EBT-HC is
-
-Appl. Sci. 2018, 8, 1077
-
-16 of 22
 
 better than more than 25% of individuals in EBT-SC. When the crossover probability is 0.6, the EBT-HC
 gets slightly smaller values of mean and standard deviation than EBT-SC. In terms of EBT-DC and EBT,
@@ -1238,8 +1069,6 @@ EBT−DC EBT−SC EBT−HC Hand
 EBT
 
 EBT−DC EBT−SC EBT−HC Hand
-
-Figure 9. Boxplot results for the best generated BTs with variable crossover probability 0.6, 0.7, 0.8 and 0.9.
 
 7500
 7500
@@ -1308,10 +1137,6 @@ results with EBT-SC and EBT respectively. When the new chromosomess are 0.2 and 
 and EBT-DC get higher mean and median than EBT-SC and EBT respectively. The EBT-DC gets bigger
 standard deviation than EBT, while EBT-HC gets smaller standard deviation than EBT-SC. That may
 be because when new chromosome proportion is lower as 0.1, the population diversity is declined,
-
-Appl. Sci. 2018, 8, 1077
-
-17 of 22
 
 which may increase the risk of dynamic constraint trapped local minimum. Thus, we should use slight
 bigger new chromosome proportion like 0.2 and 0.3.
@@ -1390,10 +1215,6 @@ approach with static constraint. When applying dynamic constraint in standard ev
 the preference for crossover may increase the chance trapped in local minimum, which leads to the
 result more unstable.
 
-Appl. Sci. 2018, 8, 1077
-
-18 of 22
-
 In the experiment, we also record the final generated BTs and the mined frequent sub-trees to
 check the intuitive products of behavior modeling. Figure 12 shows a BT generated by the approach
 EBT-HC. We can see that it is easy to understand the logic behind the controller. It divides the
@@ -1435,12 +1256,6 @@ that how the final full model be composed of the frequent sub-tree found generat
 which can justify our approach further. Additionally, those sub-trees can be used to facilitate the BT
 design by domain expert.
 
-Appl. Sci. 2018, 8, 1077
-
-19 of 22
-
-Figure 13. An evolution of frequent sub-trees found over generation by EBT-HC.
-
 5. Conclusions and Future Works
 This paper proposed a modified evolving behavior trees approach, named evolving BTs with
 hybrid constraints (EBT-HC), to facilitate behavior modeling for autonomous agents in simulation
@@ -1461,9 +1276,6 @@ There are some avenues of research to improve this study. Firstly, the proposed 
 be validated in more complex task scenarios and configurations for behavior modeling automatically.
 In current work, the Pac-Man game is configured as a simple and typical simulation environment
 
-Appl. Sci. 2018, 8, 1077
-
-20 of 22
 
 to validate proposed approach. However, the interaction between the learning technique and the
 agent environment is nontrivial. The environmental model, behavior evaluation function, perception,
