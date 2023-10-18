@@ -6,8 +6,7 @@ class Score:
         self.predSummary = predSummary if predSummary is not None else ""
 
     def rougeScore(self):
-        scorer = rouge_scorer.RougeScorer(['rouge1', 'rougeL'], use_stemmer=True)
+        scorer = rouge_scorer.RougeScorer(['rouge1', 'rouge2', 'rouge3'], use_stemmer=True)
         scores = scorer.score(self.trueSummary, self.predSummary)
 
         return scores
-
