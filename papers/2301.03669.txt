@@ -1,0 +1,794 @@
+1.INTRODUCTION
+Moist convection produces some of the most impactful weather and climate phenomena on Earth, from re
+ective
+stratocumulus layers to drenching seasonal monsoons. A longstanding challenge in climate science is to improve the
+crude treatment of such convective phenomena in general circulation models, which hampers predictions of critical
+quantities such as changes in local precipitation and the sensitivity of Earth's climate to CO 2. Looking beyond Earth,
+there is strong evidence that moist convection | that is, convection coupled to phase changes of a condensible substance
+| factors into the past and present evolution of the majority of solar system atmospheres, including Venus (Kasting
+1988), Mars (Wordsworth 2016; Yamashita et al. 2016), Jupiter (Gierasch et al. 2000), Saturn (Li & Ingersoll 2015),
+the ice giants (Hueso et al. 2020), and Titan (Schneider et al. 2012). Therefore, in order improve our understanding
+of contemporary Earth climate and planetary climate more generally, there is a clear need to deepen and generalize
+our understanding of moist convective physics.
+In this paper, we take a step toward a more generalized understanding of moist convection by focusing on one of
+its most basic characteristics: convective vigor, or the buoyancy and vertical velocity of cloud updrafts (e.g., Zipser
+et al. 2006; Hansen & Back 2015; Hansen et al. 2020). Updraft speeds aect instantaneous surface precipitation
+rates (Muller & Takayabu 2020) and the fraction of cloud condensate that is lofted instead of falling to the surface,
+which in turn exerts a strong in
+uence on cloud cover and climate sensitivity (Zhao 2014, 2016). More vigorous
+updrafts are more likely to overshoot the tropopause and inject near-surface air into the stratosphere, thereby aecting
+stratospheric humidity and chemistry (Liu et al. 2020; O'Neill et al. 2021) and planetary water loss on geologic
+timescales (Wordsworth & Pierrehumbert 2013). Lightning, which is closely associated with high updraft speeds
+(Deierling & Petersen 2008), further modulates atmospheric chemistry. Focusing on a basic property such as convective
+vigor, therefore, may reveal patterns in moist convective behavior with widespread implications.arXiv:2301.03669v1  [astro-ph.EP]  9 Jan 20232
+Currently, there are two paradigms for how the vigor of moist convection depends on thermodynamic conditions.
+The rst paradigm, which we can call \warming-driven invigoration", states that moist convective vigor increases
+with the surface temperature. This paradigm has emerged from numerical modeling of Earth's contemporary tropics:
+in idealized cloud-resolving simulations, mean and extreme convective updraft speeds increase with warming (Romps
+2011; Muller et al. 2011; Seeley & Romps 2015; Singh & O'Gorman 2015; Abbott et al. 2020). These changes are
+consistent with, and typically attributed to, the increases in convective available potential energy (CAPE) that occur in
+both global and convection-resolving models (e.g., Del Genio et al. 2007; Sobel & Camargo 2011; Romps 2011; Muller
+et al. 2011; Singh & O'Gorman 2013; Seeley & Romps 2015). Although actual updrafts do not attain the velocities
+implied by CAPE due to drag and entrainment of unsaturated environmental air, CAPE is nevertheless an extremely
+useful proxy for intense convection (e.g., Johns & Doswell 1992; Romps et al. 2014). As shown by Romps (2016), the
+increase of CAPE with warming under contemporary conditions is itself attributable to the Clausius-Clapeyron scaling
+of near-surface saturation specic humidity. Therefore, the chain of causality in the \warming-driven invigoration"
+paradigm is:
+increasingTs!increasing humidity !increasing CAPE !increasing convective vigor :
+The second paradigm for convective vigor is relevant to atmospheres in which the condensible component is highly
+non-dilute, with the limiting case being a pure steam atmosphere. Ding & Pierrehumbert (2016) and Pierrehumbert &
+Ding (2016) argued that convection should be gentle in such cases by reasoning that, when the atmosphere is saturated,
+the Clausius-Clapeyron curve dictates a one-to-one relationship between pressure and temperature, which precludes
+appreciable temperature anomalies between parcels at the same pressure level1. These theoretical predictions gained
+support from the work of Tan et al. (2021), who conducted idealized convection-resolving simulations of pure steam
+atmospheres with surface temperatures of 600{800 K and found quiescent condensing layers with small temperature
+variability and weak updrafts. Hence the line of reasoning in the \gentle pure-steam limit" is:
+very high humidity !unique relationship between Tandp!low convective vigor :
+Clearly, \warming-driven invigoration", when extrapolated to very warm temperatures, con
+icts with the \gentle pure-
+steam limit". Taken together, these paradigms suggest that convective vigor should reach a peak at some intermediate
+humidity level.
+In this paper, we seek to generalize our understanding of moist convective vigor by lling the gap between these
+two paradigms. Our approach is to simulate a wide range of planetary atmospheres that dier appreciably from
+contemporary Earth in terms of their surface temperature, surface pressure, gravitational constant, and composition.
+These atmospheres span the parameter space from highly dilute to non-dilute conditions, allowing us to continuously
+probe the transitional behavior between the two paradigms for convective vigor. To circumvent the inherent uncertainty
+of convective parameterizations and allow detailed analysis of convective dynamics, we performed these simulations
+with a 
+exible convection-resolving model (described in detail in section 2). We analyze metrics of convective vigor
+in these atmospheres, and show that our results match the predictions of an analytical theory for radiative-convective
+equilibrium (RCE) originally developed in the context of Earth's tropics (Romps 2016) (hereafter, R16). The analytical
+theory of R16 predicts the mean CAPE of a convecting atmosphere, and we show that this theory provides a unifying
+theoretical framework that links the two paradigms for convective vigor.
+The outline of the paper is as follows. In section 2, we describe the 
+exible convection-resolving model and our
+numerical experiments. Section 3 analyzes convective vigor in the simulated atmospheres. In section 4, we apply the
+theory of R16 to our results. We conclude in section 5 with a discussion of the implications of our work for early Earth
+and other planetary atmospheres.
+2.EXPERIMENTAL METHODS
+2.1. Core experiments
+Our core suite of convection-resolving RCE simulations consists of three experiments. The rst core experiment
+used the Earth-like model conguration, with the total surface pressure xed at the contemporary value of 105Pa and
+the surface temperature varying from 275 K to 365 K (experiment name EarthTemp ). In the second core Earth-like
+1This argument neglects \virtual" eects of compositional dierences and condensates on density.3
+experiment ( EarthPressure ), the surface temperature was instead xed at 300 K while the surface pressure varied
+from (1/16)to 8the contemporary value. The third core experiment ( Titan ) used the Titan-like conguration of
+the model with the surface pressure xed at the contemporary value of 1.467 105Pa and the surface temperature
+varying from 80 to 110 K. The parameters distinguishing the Earth-like and Titan-like congurations will be described
+in detail below; see also Table 1. A number of additional simulations were performed as sensitivity tests, which we
+will describe as they come up in the course of the main text.
+2.2. Convection-resolving model
+For all experiments, we simulated nonrotating radiative-convective equilibrium on square, doubly periodic domains
+with the convection-resolving model DAM (Romps 2008). DAM has a nite-volume, fully-compressible dynamical core
+and uses the implicit approach to sub-grid diusion. The vertical grid had a variable spacing, transitioning smoothly
+from z= 50 m below an altitude of 500 m to  z= 1000 m at altitudes between 10 km and the model top. The
+model top was at a variable height because our simulated tropospheres vary widely in geometric depth. The default
+horizontal resolution was  x= y= 2 km and the default horizontal domain size was Lx=Ly= 96 km. We also
+ran a small subset of simulations at a higher resolution of  x= 500 m and with free-tropospheric  z= 500 m (the
+EarthTemp hrexperiment). The default model time step was  t= 20 s, sub-stepped to satisfy a CFL condition;
+this time step was used for all simulations but EarthTemp hr, which used  t= 5 s. Overall, the model domains are
+similar in size and resolution to the \RCE small" protocol from the RCEMIP project (Wing et al. 2017) in which
+DAM participated.
+2.3. Radiative transfer
+To avoid inessential complexity and focus attention on convective dynamics, we used a simplied treatment of
+radiative transfer in the majority of our simulations (as in, e.g., Tan et al. 2021). Specically, we prescribed an
+idealized tropospheric radiative cooling using an equation of the form:
+ @
+@TF=(T Tt); (1)
+whereTis the temperature, the temperature derivative @=@T is a vertical derivative, (W/m2/K2) is a constant
+setting the magnitude of radiative forcing, F(W/m2) is the net upward radiative 
+ux, and Tt(K) is the prescribed
+tropopause temperature. Numerically, we approximated the vertical derivative @=@T with a centered nite dierence
+on the model's vertical grid. Equation 1 was proposed by Jeevanjee & Romps (2018) as a t to the invariant radiative
+
+ux divergence curve found for Earth, and has been used as an idealized representation of tropospheric radiative
+cooling in more recent work (Jeevanjee & Zhou 2022). We used equation (1) to prescribe radiative forcing for both
+Earth-like and Titan-like experiments, although we used dierent values of the parameters (Table 1). At altitudes
+above the tropopause, temperatures were simply nudged to Tton a timescale of 6 hours; since our focus is on convective
+dynamics in the troposphere, this simplied approach to the stratosphere does not aect our results.
+One deciency of equation (1) is that it does not predict the transition to lower-tropospheric radiative heating in very
+warm climates, a regime which is known to aect convective dynamics (Seeley & Wordsworth 2021). Therefore, we also
+re-ran the EarthTemp experiment with interactive clear-sky radiative transfer (the EarthTemp realrad experiment) to
+check that our main results are not sensitive to the simplied treatment of radiation we employ in our core experiments.
+We focused on interactive clear-sky radiation because that is sucient to produce the low-level radiative heating regime
+of Seeley & Wordsworth (2021), and because DAM is not coupled to a cloud-radiation scheme that is validated up to
+the very high temperatures we simulate. Our approach to clear-sky radiative transfer was identical to the line-by-line
+method of Seeley & Wordsworth (2021), and we refer the reader to that paper for a complete description.
+2.4. Microphysics
+The default microphysics scheme in DAM is a bulk scheme with six water classes (vapor, cloud liquid, cloud ice,
+rain, snow, and graupel). However, to avoid relying on an overly Earth-centric parameterization, we conducted
+our simulations using a simplied microphysics scheme that has been described and used in previous work (Seeley
+& Wordsworth 2021). In the simplied microphysics scheme, only three bulk classes of condensible substance are
+modeled: vapor, non-precipitating cloud liquid, and rain, with associated mass fractions qv,qc, andqr, respectively.
+Microphysical transformations between vapor and cloud condensate are handled by a saturation adjustment routine,4
+parameter description Earth-like Titan-like
+g gravitational constant (m/s2) 10. 1.35
+Tt tropopause temperature (K) 200. 70.
+ radiative forcing constant (W/m2/K) 0.025 0.5
+Ra specic gas constant of dry air (J/kg/K) 287.04 296.8
+Rv specic gas constant of condensible gas (J/kg/K) 461. 518.28
+cva specic heat capacity at constant volume of dry air (J/kg/K) 719. 707.2
+cvv specic heat capacity at constant volume of condensible gas (J/kg/K) 1418. 1707.4
+cvl specic heat capacity at constant volume of condensible liquid (J/kg/K) 4119. 3381.55
+cpv specic heat capacity at constant pressure of condensible gas (J/kg/K) cvv+Rvcvv+Rv
+E0v internal energy dierence between vapor and liquid at the triple point (J/kg) 2.3741064.9105
+ptrip pressure at condensible's triple point (Pa) 611.65 11700.
+Ttrip temperature at condensible's triple point (K) 273.16 90.68
+Table 1. Parameters for the convection-resolving experiments in the Earth-like and Titan-like model congurations.
+which prevents relative humidity from exceeding 100% (i.e., abundant cloud condensation nuclei are assumed to be
+present) and evaporates cloud condensate in subsaturated air. Conversion of non-precipitating cloud condensate to
+rain is modeled as autoconversion according to
+a= qc=a; (2)
+wherea(s 1) is the sink of cloud condensate from autoconversion and a(s) is an autoconversion timescale. We use
+a= 25 minutes, which was found in prior work to produce a similar mean cloud fraction prole as the default bulk
+scheme in DAM (Seeley et al. 2020). We did not set an autoconversion threshold for qc. Rain is given a xed freefall
+speed with a default value of 8 m/s, but we also checked the sensitivity of our results to this value when appropriate
+(the VaryGrav fsexperiment). When rain falls through subsaturated air, it is allowed to evaporate according to
+e= (q
+v qv)=r; (3)
+wheree(s 1) is the rate of rain evaporation, q
+vis the saturation specic humidity, and r(s) is a rain-evaporation
+timescale. We set r= 50 hours, which was found in prior work to produce a tropospheric relative humidity prole
+similar to that of the bulk scheme (Seeley et al. 2020). Since microphysics on Titan is very poorly constrained, we used
+the same values for these microphysical constants in both the Earth-like and Titan-like model congurations; future
+work could attempt to use rst-principles theories to tune microphysical parameters for the Titan regime (Lorenz 1993;
+Loftus & Wordsworth 2021).
+2.5. Thermodynamics
+The principal dierence between our Earth-like and Titan-like model congurations pertains to the atmospheric
+thermodynamics. The thermodynamics of moist air in DAM is based on a standard set of approximations applying
+to mixtures of dry air and a condensible component which may be present in vapor, liquid, and solid form. These
+approximations are 1) both dry air and the condensible vapor are treated as ideal gases, 2) the heat capacities of all
+components are assumed not to depend on temperature, and 3) condensates are assumed to have zero specic volume
+(Ambaum 2010; Romps 2008, 2021).
+In our convection-resolving experiments, we use a simplied treatment of the condensible component by neglecting
+the solid phase, which is not of leading importance for convective dynamics in Earth's tropics (Seeley & Romps 2016).
+Therefore, at all temperatures saturation is evaluated via the expression for the saturation vapor pressure over liquid,
+which is derived from the above approximations and implemented in DAM as
+p
+v=ptripT
+Ttrip(cpv cvl)=Rv
+expLe(Ttrip)
+RvTtrip Le(T)
+RvT
+; (4)
+whereLeis the temperature-dependent latent enthalpy of evaporation given by
+Le(T) =E0v+RvT+ (cvv cvl)(T Ttrip); (5)5
+and where the other physical constants appearing in equations (4{5) are dened in Table 1.
+The values assigned to these and other physical constants determine whether DAM simulates Earth-like or Titan-like
+atmospheric composition and moist thermodynamics (Table 1). For our Earth-like conguration, dry air is assumed to
+be a mixture of 80% N 2and 20% O 2, while the condensible component is water (H 2O). For the Titan-like conguration,
+dry air is assumed to be entirely N 2and the condensible component is methane (CH 4).
+2.6. Surface 
+uxes
+Surface 
+uxes were modeled with bulk aerodynamic formulae. Specically, the surface latent and sensible heat 
+uxes
+(LHF and SHF) were given by
+LHF(x;y) =1(x;y)CDp
+u1(x;y)2+v1(x;y)2+V2Le[q
+s q1(x;y)] ; (6)
+SHF(x;y) =1(x;y)CDp
+u1(x;y)2+v1(x;y)2+V2cp[SST T1(x;y)]; (7)
+where1,q1,u1,v1, andT1are the density, specic humidity, horizontal winds, and temperature at the rst model
+level,CD= 1:510 3is a drag coecient, V= 5 m/s is a background \gustiness", Leis the latent heat of evaporation,
+cpis the specic heat capacity at constant pressure of moist air, and q
+sis the saturation specic humidity at the sea
+surface temperature and surface pressure. Since the time-mean surface enthalpy 
+ux is constrained by the (imposed)
+tropospheric radiative cooling, the values of CDandVdetermine the near-surface air-sea enthalpy disequilibrium but
+do not otherwise aect our results.
+3.RESULTS
+200 225 250 275 300 325 350 375
+temperature (K)020406080100120height (km)environment
+adiabatic parcelaTemperature profiles
+270 290 310 330 350 370
+SST (K)08162432
+(kJ/kg)bCAPE
+Figure 1. (a) Temperature proles of the environment (dashed) and adiabatically-lifted near-surface parcels (solid) from the
+EarthTemp experiment; the area between these two proles is shaded where the parcel is warmer than the environment. For
+visual clarity, a subset of surface temperature cases are plotted, and the environmental temperature prole is only plotted where
+it is cooler than the adiabatic parcel. (b) Convective available potential energy (CAPE), dened as the vertically-integrated
+positive buoyancy of the lifted parcels whose temperature proles are shown in panel (a). The condensate mass fraction in the
+lifted parcels was subjected to an exponential-decay sink term with a vertical length scale of L= 5 km; see Figure B1 for the
+eect of dierent condensate fallout assumptions.
+We begin our study of convective vigor with a focus on CAPE. CAPE is the maximum specic vertical kinetic
+energy,w2=2 (wherewis vertical velocity), that clouds can attain while rising, so it is a useful summary statistic6
+for the potential vigor of convection. Here we calculate CAPE as the vertically-integrated positive buoyancy bof an
+adiabatically-lifted parcel between its lifted condensation level (LCL) and its level of neutral buoyancy (LNB):
+CAPE =ZLNB
+LCLmax(b;0)dz; (8)
+where the buoyancy of the parcel is b=g(e=p 1) for parcel density pand environmental density e.
+We rst examine CAPE in the EarthTemp experiment, for which the surface temperature was varied in the Earth-like
+model conguration. Figure 1a shows, for a subset of surface temperature cases, the environmental temperature prole
+(time- and horizontal-mean) compared to the temperature prole of an adiabatically-lifted parcel that is initialized
+with the thermodynamic properties of mean near-surface air. There is a clear pattern in these temperature proles:
+at low and high surface temperatures, the environment and the adiabat2are nearly indistinguishable, whereas for
+intermediate surface temperatures the adiabat is signicantly warmer than the environment, especially in the upper
+troposphere. We will describe the physical explanation for this behavior in section 4. Since CAPE measures the
+integrated buoyancy of an adiabatic parcel, CAPE is therefore small at both low and high surface temperatures, with
+a peak in between (Fig. 1b). While the quantitative magnitude and location of this peak in CAPE are somewhat
+sensitive to assumptions about condensate fallout in the lifted adiabatic parcel (Fig. B1), the existence of a peak is
+robust to these details.
+280 300 320 340 360
+SST (K)0153045wmax (m/s)max CAPEaEarthTemp
+104105106
+ps (Pa)0153045max CAPE
+updraft-mean99.9th %ilebEarthPressure
+80 90 100 110
+SST (K)036912max CAPEcTitan
+Figure 2. Metrics of actual convective vigor for the (a) EarthTemp , (b) EarthPressure , and (c) Titan experiments. The metric
+wmaxrefers to the maximum tropospheric value of the prole of mean updraft velocity (diamond markers) or the prole of
+99.9th percentile of vertical velocity at each altitude (circle markers). In each panel, the location on the x-axis with maximum
+CAPE is marked by the triangle at the top of the plot
+. In panel (a), the black open circles and black open squares show w99:9
+maxfrom the simulations at 275, 325, and 355 K with high
+resolution ( EarthTemp hr) and with interactive clear-sky radiation ( EarthTemp realrad ), respectively. Note that panel (c) has
+a dierenty-axis limit than panels (a) and (b).
+The growth and decline of CAPE with warming in the EarthTemp experiment appears to connect the previously
+mentioned \warming-driven invigoration" and \gentle pure-steam limit" regimes. The near-surface specic humidity
+in these simulations ranges from about 0.2% in the coldest simulation to about 60% in the warmest, conrming that
+water vapor transitions from being a very minor trace gas to a dominant component. However, CAPE only measures
+thepotential vigor of convection. How do actual convective updraft speeds vary in these simulations? Figure 2a
+shows two metrics of actual convective vigor from the EarthTemp experiment. The rst of these metrics, wmean
+max,
+is calculated by conditionally sampling all grid cells with w > 1 m/s and cloud condensate qc>10 5kg/kg. The
+horizontal-mean vertical velocity of these cloudy-updraft grid cells is calculated at each tropospheric vertical grid level,
+and the maximum value of this prole is what we refer to as wmean
+max (labeled \updraft-mean" in Fig. 2b). The second
+metric of convective vigor is calculated from the histogram of vertical velocities at each tropospheric vertical grid
+2For brevity, we will refer to the temperature prole of a lifted, undiluted near-surface parcel as an \adiabat", ignoring the small eect of
+buoyancy on the parcel's lapse rate (e.g., Riehl & Malkus 1958; Romps 2015). Note that the \adiabats" plotted in Figure 1 are intermediate
+between the pseudo-adiabatic process (all condensates removed) and the reversible process (all condensates retained). Specically, the
+condensate sink term from fallout is modeled as@qc
+@zjfall= qc=L7
+level; these histograms are not conditionally sampled based on cloud condensate. We calculate the 99.9th percentile
+of each tropospheric grid level's vertical velocity histogram, and the maximum value of this vertical prole is what
+we refer to as w99:9
+max(labeled \99.9th percentile" in Fig. 2b). Similar to CAPE, these metrics also show an initial
+growth and eventual decline with increasing surface temperature, with the warmest simulation actually having slower
+wmaxvalues than the coldest. Note that although the qualitative behavior of wmaxis similar to CAPE, the peaks in
+thewmaxmetrics occur at a lower surface temperature than the CAPE peak, and wmaxis right-skewed while CAPE
+is left-skewed. Other choices of summary statistics for convective vigor lead to peaks at slightly dierent surface
+temperatures, but the overall phenomenon is robust to these choices. The peak in convective vigor is also robust to
+increased horizontal and vertical resolution (the EarthTemp hrexperiment; Fig. 2a, open circles) and use of realistic
+clear-sky radiation (the EarthTemp realrad experiment; Fig. 2a, open squares).
+200 220 240 260 280 300
+temperature (K)010203040506070height (km)environment
+adiabatic parcelaTemperature profiles
+104105106
+ps (Pa)05101520
+(kJ/kg)bCAPE
+Figure 3. As in Figure 1, but for the EarthPressure experiment. Note that in (b) the horizontal axis is inverted so that specic
+humidity increases toward the right.
+How general is this peak in convective vigor with respect to atmospheric humidity? In the EarthTemp experiment,
+the increase in q
+vis driven by the increasing surface temperature and associated Clausius-Clapeyron scaling of the
+saturation vapor pressure. However, specic humidity can also be increased, at xed temperature, by lowering the
+amount of non-condensing background gas (Wordsworth & Pierrehumbert 2013). Would varying the surface pressure,
+therefore, also produce variations in CAPE and convective vigor? To test this, we turn to the EarthPressure experiment,
+in which we xed the surface temperature at 300 K but varied the surface pressure from 8 105Pa to 6250 Pa
+(between a factor of 8 and 1/16the contemporary value). Figure 3 shows that CAPE varies in EarthPressure in
+qualitatively the same manner as in EarthTemp , reaching a peak at an intermediate surface pressure (around 2 104
+Pa, approximately 20% of the contemporary value). Likewise, Figure 2b shows that actual convective vigor in the
+EarthPressure experiment also peaks at intermediate surface pressures, although there is again an oset between the
+peak CAPE and the peak in actual convective vigor. Since Earth's surface pressure is relatively unconstrained during
+the Hadean and Archean (Kavanagh & Goldblatt 2015; Som et al. 2016), these results may have implications for the
+early evolution of Earth's climate and atmospheric chemistry; we will return to this topic in section 5.
+If the boom-bust evolution of CAPE seen in the EarthTemp and EarthPressure experiments is attributable to
+the transition from condensible-poor (dilute) to condensible-rich (non-dilute) conditions, this recipe is not specic to
+Earth-like moist convection: in any atmosphere with a suciently large surface reservoir of a condensible species, the
+condensible will become increasingly volatile with warming and eventually come to dominate atmospheric composition.
+To what other planetary atmospheres, then, might this boom-bust CAPE behavior apply? A natural candidate is8
+70 80 90 100 110
+temperature (K)020406080100120height (km)environment
+adiabatic parcelaTemperature profiles
+80 85 90 95 100 105 110
+SST (K)0.00.51.01.52.02.53.03.5
+(kJ/kg)bCAPE
+Figure 4. As in Figures 1 and 3, but for the Titan experiment.
+Saturn's moon Titan, which is often regarded as the closest current hydrological analog to Earth due to its active
+methane precipitation cycle. Therefore, to further generalize our understanding of convective vigor, we next turn to
+theTitan experiment. This experiment assumes Titan-like thermodynamic conditions and atmospheric composition
+(i.e., a thick N 2atmosphere with condensing CH 4and low gravity; Table 1). Similar to the Earth-like experiments,
+Figure 4 shows a peak in CAPE as the simulated Titan-like atmospheres transition from dilute to non-dilute methane
+abundance. Figure 2c shows that metrics of actual convective vigor in this experiment peak at a surface temperature
+of about 95 K. Intriguingly, this is very close to the current surface temperature of Titan.
+To better compare our three core experiments, it is helpful to recast the results in terms of variations in atmospheric
+humidity rather than surface temperature or pressure. Figure 5 plots CAPE and high-percentile updraft speeds from
+the core experiments as a function of the specic humidity at the lifted condensation level, q
+v;LCL . This reveals
+that CAPE and convective vigor in all three experiments peaks when cloud base air contains roughly 10% of the
+condensible component by mass, give or take a factor of about 2. Therefore, we can conclude that the \warming-
+driven invigoration" regime comes to an end at intermediate humidity, well before these atmospheres approach the
+steam limit.
+4.THE PHYSICAL ORIGIN OF THE CAPE PEAK
+Taken all together, our three core experiments point to a potentially common phenomenon in terrestrial atmospheres:
+moist convection is most vigorous at intermediate atmospheric humidity. What is the physical explanation for this
+behavior? In this section, we show that recent advances in the theory of convection provide a quantitative explanation
+for the peak in CAPE with respect to atmospheric humidity.
+The basic ingredient required to understand climatological variations in CAPE is a theory for the tropospheric lapse
+rate, which we denote by  ( z) = @T=@z (K/km). Note that the standard assumption in idealized 1-dimensional
+radiative-convective modeling, which is that  ( z) is given by the moist adiabat, is useless for the purpose of predicting
+CAPE: the CAPE of a moist-adiabatic atmosphere is zero by denition. It is the systematic deviations from a
+moist-adiabatic thermal structure that a successful theory for CAPE must predict.
+The key theoretical breakthrough in this regard was made by Singh & O'Gorman (2013) (hereafter, SO13), who
+emphasized the role of entrainment. Entrainment refers to the turbulent mixing with environmental air that cloudy
+updrafts experience as they ascend. Because entrainment of subsaturated air reduces condensation and latent heating
+in ascending parcels, entraining parcels cool more rapidly with height than otherwise identical undiluted parcels. The
+insight of SO13 is that the troposphere can be approximated as being neutrally buoyant with respect to such entraining9
+10−310−210−1100
+q*
+v,LCL (kg/kg)a
+Earth-like, Ts varies
+Earth-like, ps varies
+Titan-like, Ts variesCAPE
+10−310−210−1100
+q*
+v,LCL (kg/kg)bHigh-percentile updrafts
+Figure 5. (a) Normalized CAPE from the EarthTemp ,EarthPressure , and Titan experiments, plotted as a function of the
+saturation specic humidity at the lifted condensation level q
+v;LCL . (b) As in (a), but for normalized high-percentile updraft
+speeds (w99:9
+max).
+convective parcels, rather than with respect to an undiluted parcel; this assumption has come to be known as the
+\zero-buoyancy" (ZB) approximation3. Dening   mas the lapse rate of an undiluted parcel and   eas the lapse rate
+of an entraining parcel (which, by the ZB approximation, is equal to  ), we can state that   m<  =   e. According
+to this picture, then, entrainment is the wedge that drives   mand   apart, allowing for potentially large reservoirs of
+CAPE even in steady-state RCE.
+To make this discussion quantitative, we turn to the simplest model of a convecting atmosphere that incorporates
+entrainment: the \bulk-plume model"4. The bulk-plume model divides the atmosphere into two plumes: ascending,
+saturated (cloudy) air, and descending, subsaturated environmental air; the \bulk" descriptor refers to the fact that
+the thermodynamic properties of these two plumes are assumed to be homogeneous in the horizontal at each altitude.
+Mass exchange between the two plumes is represented by specied entrainment and detrainment rates, such that
+conservation of mass in the bulk-plume model is expressed as
+@M
+@z=e d
+=M(" ); (9)
+whereM(kg/m2/s) is the upward convective mass 
+ux (equal and opposite, in RCE, to the subsidence mass 
+ux in
+the environmental plume), eandd(kg/m3/s) are the mass entrainment and detrainment rates, and "and(m 1)
+are known as the fractional entrainment and detrainment rates, dened as e=M andd=M, respectively. Equation (9)
+implies that the convective mass 
+ux increases with height if entrainment outpaces detrainment, and vice versa.
+The second bulk-plume equation we will use is the conservation equation for moist static energy h, which is conven-
+tionally dened as h=cpT+gz+Lqv. Herecp(J/kg/K) is the specic heat capacity of air at constant pressure, L
+(J/kg) is the latent heat of evaporation, and the other symbols take their usual meaning. While this is an approxi-
+mate expression for moist static energy | neglecting, for instance, the temperature-dependence of the latent heat of
+evaporation (Romps 2015) | it is suciently accurate to form the basis of a theory for CAPE. The conservation of
+moist static energy in the entraining convective plume is expressed as
+@(Mh)
+@z=ehe dh; (10)
+3We stress that this zero-buoyancy assumption is not a zero-CAPE assumption: it is the entraining convective parcels that are assumed to
+have zero buoyancy with respect to the mean environment, not the adiabatic parcel that is used to calculate CAPE.
+4This discussion of the zero-buoyancy bulk-plume theory for CAPE is based on that in Romps (2016) and Romps (2020); we refer the reader
+to these references for a more thorough treatment.10
+whereh=cpT+gz+Lq
+vis the saturation moist static energy (appropriate for the convective plume because it is
+saturated). The environmental moist static energy can be expressed as he=cpT+gz+LRq
+v, where we have used the
+sameTas in the convective plume (invoking the ZB approximation) and where the environmental specic humidity
+is given by the product of R, the environmental relative humidity, and the saturation specic humidity, q
+v.
+Using the product rule on the left-hand side of equation (10), substituting in equation (9), and using the denitions
+ofhandhegiven above, we arrive at an important result from SO13:
+@h
+@z= "(1 R)Lq
+v; (11)
+Equation 11 states that the entraining plume's moist static energy decreases with height at a rate proportional to the
+saturation decit of the environment, (1  R)q
+v(Seeley & Romps 2015).
+Although SO13 treated the environmental relative humidity, R, as an external parameter that must be specied,
+analysis of the bulk-plume water budget can yield a self-consistent analytic expression for R(Romps 2014):
+R=+
+ "
++
+ ": (12)
+In equation 12, is a nondimensional parameter specifying the fraction of condensates formed at a given height that
+evaporate at that height instead of precipitating out of the atmosphere (i.e., the precipitation eciency of the bulk-
+plume convection is 1  ). The quantity 
+is the water vapor lapse rate, dened as 
+ @lnq
+v=@zand expressed in
+terms of thermodynamic parameters as
+
+=L 
+RvT2 g
+RT; (13)
+whereRvandR(J/kg/K) are the specic gas constants for water vapor and dry air, respectively. The expression
+(13) is straightforward to derive by combining the Clausius-Clapeyron equation for the saturation vapor pressure with
+hydrostatic balance (Romps 2014).
+The nal step toward the theory for CAPE was taken by Romps (2016). For analytic solubility, that work considered
+a simplied case and assumed that M,R, andare all constant with height. The constancy of Mimplies"=, by
+equation (9), while the constancy of Randimply that the relative humidity and entrainment rate can be expressed
+in terms of another constant, a0, as follows:
+R=a+
+1 +a; (14)
+"=a
+1 
+: (15)
+Note thata, which we will refer to as the \bulk-plume parameter", is proportional to the entrainment rate, so that
+a= 0 corresponds to undiluted convection. Plugging in equations (14{15) to the right-hand side of equation (11)
+yields
+@h
+@z= a
+1 +a
+Lq
+v: (16)
+We can obtain a second equation for @h=@zby dierentiating the expression for hdirectly:
+@h
+@z= cp  +g 
+Lq
+v
+=g
+1 +q
+vL
+RT
++  
+cp+q
+vL2
+RvT2
+; (17)
+where the second line follows from substituting equation (13) for 
+. Equating the right-hand sides of equations (16)
+and (17) and solving for  , we obtain
+  =g
+cp1 +a+q
+vL=(RT)
+1 +a+qvL2=(cpRvT2)
+: (18)
+Equation (18) is a generalization of the moist lapse rate that accounts for the eect of entrainment (Romps 2020).
+In the limit of no entrainment ( a!0), equation 18 reduces to the standard expression for the moist adiabat,   m:
+ m=g
+cp1 +q
+vL=(RT)
+1 +qvL2=(cpRvT2)
+: (19)11
+We can use equation (18) to analyse the dierence between   and   m| and, therefore, CAPE | in the limit of very
+dry and very moist atmospheres. In the dry limit ( q
+v!0), which is approached by reducing the surface temperature
+or increasing the amount of background dry air, we can drop all terms multiplied by q
+vinside the brackets in equation
+(18), which allows the factors of (1 + a) in the numerator and denominator to cancel and yields   m=g=cp=  d, the
+dry-adiabatic lapse rate. Hence entrainment has no eect on the lapse rate in the dry limit,   and   mare both equal
+to the dry adiabat, and CAPE is zero. On the other hand, in the very moist limit ( q
+v!1), which is approached
+by increasing the surface temperature or decreasing the amount of background dry air, the terms multiplied by q
+v
+dominate over the factors of afor typical Earth and Titan-like conditions. For example, for Earth-like conditions5,
+the factorL=(RT) ranges from about 25{50, while the factor L2=(cpRvT2) ranges from about 100{500, in both cases
+dominating over a, which typically takes on values of O(0:1) O(1) (Romps 2016). Hence the entraining lapse rate
+asymptotes to  'gT=L | which, as in the dry limit, is independent of the entrainment rate, and also equal to the
+moist limit of   m. To summarize, equation (18) suggests that we should expect minimal CAPE in both the dry and
+moist limits, with a peak in between for the intermediate values of q
+vthat allow entrainment to drive a wedge between
+  and   m.
+270 290 310 330 350 370
+SST (K)0510152025303540
+a=0.2a=0.8aEarthTemp
+104105106
+ps (Pa)071421
+R16 theory
+a=0.2a=0.8bEarthPressure
+CRM
+80859095100105110
+SST (K)01234
+CAPE (kJ/kg)
+a=0.5a=1.5cTitan
+Figure 6. CAPE from the (a) EarthTemp , (b) EarthPressure , and (c) Titan experiments from the convection-resolving
+simulations (colored markers) and from the analytical predictions for CAPE given by equation (A1) (gray shaded areas). The
+analytical predictions are shown for values of the bulk-plume parameter aranging from 0.2 to 0.8 for the Earth-like experiments,
+and foraranging from 0.5 to 1.5 for the Titan-like experiment. The analytical solutions are initialized with the temperature
+and humidity of the lifted condensation level from the corresponding simulation.
+Quantitatively, the magnitude and atmospheric humidity of the peak in CAPE can be predicted using the analytic
+formalism of Romps (2016). Figure 6 shows analytical predictions for CAPE using the theory of R16 (reproduced in our
+equation A1), in comparison to the results from our convection-resolving simulations. The theory clearly captures the
+boom-bust evolution of CAPE in all three core experiments, providing the theoretical bridge between the \warming-
+driven invigoration" and the \gentle pure-steam limit" regimes. While R16 applied their analytic theory for CAPE
+to the context of surface warming on Earth, here we have shown that the same essential physics explains convective
+vigor in convection-resolving simulations with varied surface temperature, varied surface pressure, and with Titan-like
+thermodynamics. The notion that entraining and adiabatic temperature proles converge in non-dilute atmospheres
+resembles the arguments given by Ding & Pierrehumbert (2016) and Pierrehumbert & Ding (2016), although our
+results suggest that this physics begins to operate well before the steam limit is reached. Ding & Pierrehumbert
+(2016) and Pierrehumbert & Ding (2016) also argued that environmental relative humidity should approach 1 as the
+atmosphere becomes increasingly non-dilute, a prediction that is conrmed by our results (Fig. B2).
+In addition to explaining the behavior of CAPE in our convection-resolving simulations, the theory of R16 provides
+clarity on which planetary parameters control CAPE. An interesting attribute of equation A1 is that it has no explicit
+dependence on a planet's gravitational constant, g. Physically, this can be understood as a cancellation between two
+5We leave investigation of whether this limit holds in more exotic circumstances, such as exoplanet silicate atmospheres with temperatures
+in the thousands of kelvins (e.g., Kang et al. 2021), to future work.12
+factors: 1) for a given parcel temperature anomaly, there is a direct proportionality between the parcel's buoyancy and
+g; and 2) for a given surface temperature and tropopause temperature, there is an inverse proportionality between
+the geometric depth of the atmosphere and g; hence reducing gravity lowers the integrand in equation 8 but increases
+the domain of vertical integration by a compensating amount.
+To test this prediction of an insensitivity to g, we ran a subset of surface temperature cases from the EarthTemp
+experiment with either enhanced ( g= 25 m/s2) or reduced ( g= 3:5 m/s2) gravitational constant (the VaryGrav
+experiment); these values of gapproximately cover surface conditions for solar system planets ranging in mass from
+Mercury to Jupiter. We nd a weak dependence of CAPE on g(i.e., CAPE varies by a factor of '2 whengvaries by a
+factor of'7), in rough accordance with the theoretical prediction, and also nd a correspondingly small sensitivity in
+our metrics of actual convective vigor to g. The small variations in CAPE and convective vigor likely result from the
+eect ofgon the nature of turbulence in the simulations, which would aect both the entrainment rate that enters into
+the theory for CAPE (through the bulk-plume parameter a) and the drag experienced by actual convecting parcels.
+These experiments with varied gravity also aord an opportunity to test the sensitivity of our results to the precipi-
+tation fall speed parameter, which some studies have suggested is a key control on updraft speeds (Parodi & Emanuel
+2009). Assuming a conservative6linear dependence of precipitation fall speed on g, we re-ran the cases with g= 3:5
+m/s2andg= 25 m/s2with the precipitation fall speeds modied to 2.8 m/s and 20 m/s, respectively. We found this
+had a minimal eect, with changes in CAPE and convective vigor generally limited to 5%.
+5.DISCUSSION
+Using an idealized convection-resolving model, we have demonstrated that convective vigor is expected to peak at
+intermediate concentrations of the condensing substance in a diversity of planetary circumstances. However, more work
+is needed to build our results into a universal understanding of convective vigor. Our simulations of local radiative-
+convective equilibrium are highly idealized, and many questions remain about how the peak in convective vigor with
+respect to atmospheric humidity would manifest in more realistic modeling setups that include coupling to large-scale
+circulations (Pierrehumbert & Ding 2016) or a diurnal cycle. Another promising avenue for extension concerns our
+Titan-like simulations, for which we assumed a limitless supply of surface evaporation. In reality, the surface of Titan is
+quite arid (Schneider et al. 2012), and future work could explore convective vigor in the regime where the atmospheric
+condensible inventory is comparable to the total inventory.
+Additionally, although we have successfully applied the theory of R16 to our results, that theory is limited in its
+general applicability because it approximates the specic gas constant and heat capacity of moist air by those of the dry
+component. This is a tolerable source of error when the dry and condensing components do not dier too much in molar
+mass, as in the case of H 2O condensing in an N 2/O2mixture or CH 4condensing in N 2, but this approximation breaks
+down when the background gas is very light (e.g., mainly H 2). In that case, the atmospheric scale height can collapse
+with warming as the atmosphere comes to be dominated by the relatively heavier condensing component (Koll & Cronin
+2019). Since many planets form with a primordial hydrogen envelope, this is an important class of atmospheres to
+which the R16 theory and our simulation results may not apply. Additional theoretical and computational work could
+investigate this regime, for which the \virtual" eects of compositional dierences on buoyancy may be crucial.
+In additional to building fundamental understanding of moist convection, our results may also have implications for
+planetary evolution on long time scales. The rate at which a terrestrial planet loses water depends on stratospheric
+humidity, because water transported to the stratosphere becomes vulnerable to photolysis and subsequent loss of
+H to space (Kasting 1988). Purely thermodynamic arguments suggest that stratospheric moistening in planetary
+atmospheres depends on both surface temperature and surface pressure, with the transition to a moist stratosphere
+occurring at intermediate humidities (Wordsworth & Pierrehumbert 2013). However, on present-day Earth, injection
+of water into the stratosphere by intense convective storms plays an important role in setting the average stratospheric
+water content (Corti et al. 2008). It may be that in real atmospheres, the increase in convective vigor at intermediate
+humidity causes the \moist greenhouse" transition (Kasting 1988) to be approached more rapidly than either one-
+dimensional radiative-convective models or 3D general circulation model simulations (e.g., Leconte et al. 2013) would
+suggest. Further research using models that couple convection to large-scale dynamical and radiative processes is
+required to investigate this possibility.
+6Theoretical results for monodisperse droplets predict a square-root dependence of raindrop terminal velocity on g(Loftus & Wordsworth
+2021).13
+Furthermore, because the rate of lightning strikes in planetary atmospheres is believed to depend in part on convective
+vigor, these results may also have important implications for lightning-driven atmospheric chemistry. Romps et al.
+(2014) proposed that the lightning 
+ash rate on modern Earth is proportional to the product of CAPE and precipitation
+rate. If this relation is robust across wide ranges of planetary conditions, it implies that the importance of lightning
+chemistry would be strongly enhanced in atmospheres with intermediate specic humidity. Because both surface
+temperature and atmospheric pressure may have varied signicantly on Earth in the Hadean, this has interesting
+implications for the rate of lightning-driven formation of important prebiotic molecules such as HCN during this
+period (Chameides & Walker 1981; Ardaseva et al. 2017).
+Data availability: Cloud-resolving model output and the code that generates the gures in this manuscript is
+available at https://doi.org/10.5281/zenodo.7331932.1
+2
+APPENDIX
+A.ANALYTICAL EXPRESSION FOR CAPE FROM ROMPS (2016)
+The solutions of R16 yield a closed-form expression for the CAPE of an atmosphere in RCE:
+CAPE =R
+2ffW(ya)[2 2f(Ts Tt) +W(ya)] W(e f(Ts Tt)ya)[2 +W(e f(Ts Tt)ya)]
+ W(y0)2 2f(Ts Tt) +W(y0)] +W(e f(Ts Tt)y0)[2 +W(e f(Ts Tt)y0)]g:(A1)
+whereWis the Lambert W function dened by W(xex) =x, and where
+f=L
+RvT2
+0 cp
+RT0; and (A2)
+ya=Lq
+vs
+(1 +a)RT0expLq
+vs
+(1 +a)RT0
+: (A3)
+Here,R(J/kg/K) is the specic gas constant of dry (background) air, Rv(J/kg/K) is the specic gas constant of
+the condensible vapor, L(J/kg) is the latent heat of condensation (assumed constant), cp(J/kg/K) is the specic
+heat capacity at constant pressure of dry air, q
+vs(kg/kg) is the saturation specic humidity at the surface, and T0
+(K) is a constant reference temperature chosen to be the average of the surface temperature Tsand the tropopause
+temperature Tt. The dimensionless parameter acharacterizes the bulk-plume convection. In equation A1, y0is given
+by equation A3 with a= 0.
+The expression for CAPE given above depends only on known physical constants, observable planetary conditions,
+and a summary parameter characterizing the bulk-plume convection. The bulk-plume parameter ais proportional to
+the entrainment rate7, and it is easy to verify that setting a= 0 (the limit of non-entraining convection) produces a
+moist-adiabatic atmosphere with zero CAPE, as expected. We can also verify that equation A1 makes quantitatively
+accurate predictions for Earth's tropics today. We set a= 0:2, which corresponds to typical values of precipitation
+eciency and entrainment rate as diagnosed in cloud-resolving simulations, as discussed in R16. Additionally using
+Ts= 300 K,q
+vs= 20 g/kg, L= 2:5106J/kg, andTt= 200 K, equation A1 predicts CAPE '2500 J/kg, which is
+indeed a typical value for convectively-active parts of Earth's tropics (Riemann-Campe et al. 2009).
+B.SUPPLEMENTAL FIGURES
+7Specically, a=PE=
+, where(1/m) is the fractional entrainment rate, the precipitation eciency PE is dened as the ratio of net
+condensation to gross condensation (assumed constant throughout the troposphere), and 
+ @zlogq
+v(1/m) is the saturation water-vapor
+lapse rate. One of the assumptions made by R16 for analytical tractability is that /
+, so thatais constant.14
+275 285 295 305 315 325 335 345 355 365
+SST (K)05101520253035CAPE (kJ/kg)pseudoadiabatic
+L=5 km
+L=25 km
+reversible
+Figure B1. The eect of varying condensate fallout assumptions on parcel lifting calculations for computation of CAPE. The
+condensed water mass fraction is assumed to have a sink term due to fallout that manifests as an exponential decay with height,
+on a length scale L, during each discrete lifting step. The main text gures use L= 5 km, but here we also show the cases
+L!0 (pseudoadiabatic), L= 25 km, and L!1 (reversible). In all cases there is a peak in CAPE.
+0.6 0.8 1.0
+relative humidity200
+220
+240
+260
+280
+300
+320
+340
+360T (K)EarthTemp
+0.6 0.8 1.0
+relative humidity200
+220
+240
+260
+280
+300EarthPressure
+0.8 0.9 1.0
+relative humidity70
+75
+80
+85
+90
+95
+100
+105
+110Titan
+Figure B2. Proles of environmental relative humidity in the (left) EarthTemp , (center) EarthPressure , and (right) Titan
+experiments. Relative humidity is plotted as a function of mean temperature in the troposphere, as in Romps (2014). The
+line colors are as in the main text gures, with relative humidity generally increasing as the condensible species becomes more
+prevalent.
+REFERENCES
+Abbott, T. H., Cronin, T. W., & Beucler, T. 2020, Journal
+of the Atmospheric Sciences, 77, 1637,
+doi: 10.1175/JAS-D-19-0197.1
+Ambaum, M. H. P. 2010, Thermal physics of the
+atmosphere (Hoboken, NJ: Wiley-Blackwell)Ardaseva, A., Rimmer, P. B., Waldmann, I., et al. 2017,
+Monthly Notices of the Royal Astronomical Society, 470,
+187, doi: https://doi.org/10.1093/mnras/stx1012
+Chameides, W. L., & Walker, J. C. G. 1981, Origins of Life,
+11, 291, doi: 10.1007/BF0093148315
+Corti, T., Luo, B. P., De Reus, M., et al. 2008, Geophysical
+Research Letters, 35
+Deierling, W., & Petersen, W. A. 2008, Journal of
+Geophysical Research Atmospheres, 113,
+doi: 10.1029/2007JD009598
+Del Genio, A. D., Yao, M.-S., & Jonas, J. 2007, Geophysical
+Research Letters, 34, n/a, doi: 10.1029/2007GL030525
+Ding, F., & Pierrehumbert, R. T. 2016, The Astrophysical
+Journal, 822, 24, doi: 10.3847/0004-637X/822/1/24
+Gierasch, P. J., Ingersoll, A. P., Baneld, D., et al. 2000,
+Nature, 403, 628, doi: 10.1038/35001017
+Hansen, Z. R., & Back, L. E. 2015, Geophysical Research
+Letters, 1, doi: 10.1002/2015GL066878
+Hansen, Z. R., Back, L. E., & Zhou, P. 2020, Journal of the
+Atmospheric Sciences, 77, 217,
+doi: 10.1175/JAS-D-18-0346.1
+Hueso, R., Guillot, T., & S anchez-Lavega, A. 2020,
+Philosophical Transactions of the Royal Society A:
+Mathematical, Physical and Engineering Sciences, 378,
+doi: 10.1098/rsta.2019.0476
+Jeevanjee, N., & Romps, D. M. 2018, Proceedings of the
+National Academy of Sciences of the United States of
+America, 115, 11465, doi: 10.1073/pnas.1720683115
+Jeevanjee, N., & Zhou, L. 2022, Journal of Advances in
+Modeling Earth Systems, 14, doi: 10.1029/2021ms002759
+Johns, R., & Doswell, C. 1992, Weather and Forecasting, 7,
+doi: https://doi.org/10.1175/1520-0434(1992)007 h0588:
+SLSFi2.0.CO;2
+Kang, W., Ding, F., Wordsworth, R., & Seager, S. 2021,
+The Astrophysical Journal, 906, 67
+Kasting, J. F. 1988, Icarus, 74,
+doi: https://doi.org/10.1016/0019-1035(88)90116-9
+Kavanagh, L., & Goldblatt, C. 2015, Earth and Planetary
+Science Letters, 413, 51, doi: 10.1016/j.epsl.2014.12.032
+Koll, D. D. B., & Cronin, T. W. 2019, The Astrophysical
+Journal, 881, 120, doi: 10.3847/1538-4357/ab30c4
+Leconte, J., Forget, F., Charnay, B., Wordsworth, R., &
+Pottier, A. 2013, Nature, 504, 268,
+doi: https://doi.org/10.1038/nature12827
+Li, C., & Ingersoll, A. P. 2015, Nature Geoscience, 8, 398,
+doi: 10.1038/ngeo2405
+Liu, N., Liu, C., & Hayden, L. 2020, Journal of Geophysical
+Research: Atmospheres, 125, 1,
+doi: 10.1029/2019JD032003
+Loftus, K., & Wordsworth, R. D. 2021, Journal of
+Geophysical Research: Planets, 126,
+doi: 10.1029/2020JE006653
+Lorenz, R. D. 1993, Planetary and Space Science, 41, 647,
+doi: https://doi.org/10.1016/0032-0633(93)90048-7Muller, C., & Takayabu, Y. 2020, Environmental Research
+Letters, 15, doi: 10.1088/1748-9326/ab7130
+Muller, C. J., O'Gorman, P. a., & Back, L. E. 2011, Journal
+of Climate, 24, 2784, doi: 10.1175/2011JCLI3876.1
+O'Neill, M. E., Orf, L., Heymseld, G. M., & Halbert, K.
+2021, Science, 373, 1248, doi: 10.1126/science.abh3857
+Parodi, A., & Emanuel, K. 2009, Journal of the
+Atmospheric Sciences, 66, 3449,
+doi: 10.1175/2009JAS3103.1
+Pierrehumbert, R. T., & Ding, F. 2016, Proceedings of the
+Royal Society A: Mathematical, Physical and Engineering
+Science, 472, 20160107, doi: 10.1098/rspa.2016.0107
+Riehl, H., & Malkus, J. S. 1958, Geophysica, 6, 503
+Riemann-Campe, K., Fraedrich, K., & Lunkeit, F. 2009,
+Atmospheric Research, 93, 534,
+doi: 10.1016/j.atmosres.2008.09.037
+Romps, D. M. 2008, Journal of the Atmospheric Sciences,
+65, 3779, doi: 10.1175/2008JAS2679.1
+|. 2011, Journal of the Atmospheric Sciences, 68, 123,
+doi: 10.1175/2010JAS3542.1
+|. 2014, Journal of Climate, 27, 7432,
+doi: 10.1175/JCLI-D-14-00255.1
+|. 2015, Journal of the Atmospheric Sciences, 72, 3639,
+doi: https://doi.org/10.1175/JAS-D-15-0054.1
+|. 2016, Journal of the Atmospheric Sciences, 73, 3719,
+doi: 10.1175/JAS-D-15-0327.1
+|. 2020, Theory of tropical moist convection, 1{45,
+doi: 10.1093/oso/9780198855217.003.0001
+|. 2021, Quarterly Journal of the Royal Meteorological
+Society, 147, 3493, doi: 10.1002/qj.4154
+Romps, D. M., Seeley, J. T., Vollaro, D., & Molinari, J.
+2014, Science, 346, 851, doi: 10.1126/science.1259100
+Schneider, T., Graves, S. D. B., Schaller, E. L., & Brown,
+M. E. 2012, Nature, 481, 58, doi: 10.1038/nature10666
+Seeley, J. T., Lutsko, N. J., & Keith, D. W. 2020,
+Geophysical Research Letters, 1,
+doi: https://doi.org/10.1029/2020GL090876
+Seeley, J. T., & Romps, D. M. 2015, Geophysical Research
+Letters, 42, 1,
+doi: https://doi.org/10.1002/2015GL066199
+|. 2016, Geophysical Research Letters, 43, 1,
+doi: https://doi.org/10.1002/2016GL068583
+Seeley, J. T., & Wordsworth, R. D. 2021, Nature, 599,
+doi: 10.1038/s41586-021-03919-z
+Singh, M. S., & O'Gorman, P. a. 2013, Geophysical
+Research Letters, 40, 4398, doi: 10.1002/grl.50796
+Singh, M. S., & O'Gorman, P. A. 2015, Quarterly Journal
+of the Royal Meteorological Society, 141, 2828,
+doi: 10.1002/qj.256716
+Sobel, A. H., & Camargo, S. J. 2011, Journal of Climate,
+24, 473, doi: 10.1175/2010JCLI3748.1
+Som, S. M., Buick, R., Hagadorn, J. W., et al. 2016, Nature
+Geoscience, 9, 448, doi: https://doi.org/10.1038/ngeo2713
+Tan, X., Lef evre, M., & Pierrehumbert, R. T. 2021, The
+Astrophysical Journal Letters, 923, L15,
+doi: 10.3847/2041-8213/ac3e69
+Wing, A. A., Reed, K. A., Satoh, M., et al. 2017,
+Geoscientic Model Development Discussions, 11, 1,
+doi: https://doi.org/10.5194/gmd-11-793-2018
+Wordsworth, R. D. 2016, Annual Review of Earth and
+Planetary Sciences, 44, doi: https:
+//doi.org/10.1146/annurev-earth-060115-012355Wordsworth, R. D., & Pierrehumbert, R. T. 2013,
+Astrophysical Journal, 778,
+doi: 10.1088/0004-637X/778/2/154
+Yamashita, T., Odaka, M., Sugiyama, K. I., et al. 2016,
+Journal of the Atmospheric Sciences, 73, 4151,
+doi: 10.1175/JAS-D-15-0132.1
+Zhao, M. 2014, Journal of Climate, 27, 1845,
+doi: 10.1175/JCLI-D-13-00145.1
+|. 2016, Journal of Climate, 543,
+doi: 10.1175/JCLI-D-15-0191.1
+Zipser, E. J., Cecil, D. J., Liu, C., Nesbitt, S. W., & Yorty,
+D. P. 2006, Bulletin of the American Meteorological
+Society, 87, 1057, doi: 10.1175/BAMS-87-8-1057

@@ -1,0 +1,24 @@
+Draft version August 5, 2020
+Typeset using L ATEXtwocolumn style in AASTeX63
+Connecting Optical Morphology, Environment, and H IMass Fraction for Low-Redshift Galaxies
+Using Deep Learning
+John F. Wu1, 2
+1Department of Physics & Astronomy, Johns Hopkins University, 3400 N. Charles Street, Baltimore, MD 21218, USA
+2Space Telescope Science Institute, 3700 San Martin Drive, Baltimore, MD 21218, USA
+ABSTRACT
+A galaxy’s morphological features encode details about its gas content, star formation history, and
+feedback processes, which play important roles in regulating its growth and evolution. We use deep
+convolutional neural networks (CNNs) to learn a galaxy’s optical morphological information in order
+to estimate its neutral atomic hydrogen (H I) content directly from SDSS griimage cutouts. We are
+able to accurately predict a galaxy’s logarithmic H Imass fraction,M log(MHI=M?), by training a
+CNN on galaxies in the ALFALFA 40% sample. Using pattern recognition (PR), we remove galaxies
+with unreliableMestimates. We test CNN predictions on the ALFALFA 100%, xGASS, and NIBLES
+catalogs, and ﬁnd that the CNN consistently outperforms previous estimators. The H I-morphology
+connection learned by the CNN appears to be constant in low- to intermediate-density galaxy environ-
+ments, but it breaks down in the highest-density environments. We also use a visualization algorithm,
+Gradient-weighted Class Activation Maps (Grad-CAM), to determine which morphological features
+are associated with low or high gas content. These results demonstrate that CNNs are powerful tools
+for understanding the connections between optical morphology and other properties, as well as for
+probing other variables, in a quantitative and interpretable manner.
+Keywords: Galaxies, Galaxy evolution, Galaxy processes, Galaxy environments, Astronomy data anal-
+ysis, Astronomy data visualization

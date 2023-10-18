@@ -1,0 +1,869 @@
+I. I NTRODUCTION
+Since Shannon’s seminal work [2], the quest to design
+efﬁciently decodable long, high-redundancy codes has resu lted
+in several technical revolutions from concatenated codes [ 3]
+to turbo codes [4] to LDPC codes [5]. Since the rediscovery
+of LDPC codes [6] in the 1990s [7–9] and the subsequent
+development of practical encoders and decoders, e.g. [10–1 6],
+they have become the gold standard for high performance,
+long, large redundancy, soft-input error correction codes . They
+are used, for example, in standards including ATSC 3.0 [17]
+and 5G New Radio [18].
+A common principle behind the design of long, high-
+redundancy codes is to create them by concatenating and com-
+posing shorter component codes. Each component is decoded
+with soft-input and provides soft-output that informs the d e-
+coding of another component. The process is repeated, passi ng
+This paper was presented in part at 2023 IEEE Globecom [1].updated soft information around the code structure until a
+global consensus is found. Core to decoding performance is
+a combination of code-structure, which determines how soft
+information is circulated amongst components, and the qual ity
+of the soft-output of the decoder, which captures how much
+is gleaned from each decoding of a component code. For
+example, turbo decoding of Elias’s product codes [19] can
+avail of powerful component codes, such as Bose-Chaudhuri-
+Hocquenghem (BCH) codes, but relies on approximate soft-
+output [4], while LDPC codes avail of weak single parity
+check codes but provide perfect per-component soft-output .
+GRAND is a recently developed family of code-agnostic
+decoding algorithms that can accurately decode any moderat e
+redundancy code in both hard detection [20–22] and soft
+detection [23–27] settings. GRAND algorithms function by
+sequentially inverting putative noise effects, ordered fr om
+most to least likely according to channel properties and
+soft information, from received signals. The ﬁrst codeword
+yielded by inversion of a noise effect is a maximum-likeliho od
+decoding. Since this procedure does not depend on codebook
+structure, GRAND can decode any moderate redundancy code,
+even non-linear ones [28]. Efﬁcient hardware implementati ons
+[29, 30] and syntheses [31–34] for both hard and soft-detect ion
+settings have established the ﬂexibility and energy efﬁcie ncy
+of GRAND decoding strategies.
+Here we signiﬁcantly extend GRAND’s range of operation
+by establishing that soft-input variants can be used to ac-
+curately and efﬁciently decode long, high-redundancy code s.
+While initial attempts in this direction have used GRAND
+solely as a list decoder [35, 36] followed by Pyndiah’s
+traditional approach to generate soft-output [4], central to
+the enhanced performance here is proving that any soft-inpu t
+GRAND algorithm can itself readily produce more accurate
+soft-output along with its decoding. This enhancement resu lts
+in both better block error rate (BLER) and bit error rate (BER )
+performance as well as lower complexity.
+The soft-output measure we develop is an accurate estimate
+in the case of a single decoding of the a posteriori probabili ty
+that a decoding is correct or incorrect and, in the case of lis t
+decoding, the probability that each code-word in the list is
+correct or the correct code-word is not in the list. We derive
+these probabilities for uniform at random codebooks anddemonstrate empirically that the resulting formulae conti nue
+to provide accurate soft-output for structured codebooks.
+The formulae can be used with any algorithm in the
+GRAND family so long as soft-input is available, regardless
+of its query order. Calculating the soft-output only requir es
+knowledge of the code’s dimensions and the evaluation of
+the probability of each noise effect query during GRAND’s
+normal operation, so computation of the measure does not
+signiﬁcantly increase the decoder’s algorithmic complexi ty
+or memory requirements. In practical terms, the approach
+provides accurate soft-output for single- or list-decodin g of
+any moderate redundancy code of any length and almost any
+structure.
+The core distinction of this soft-output is that it includes
+an estimate of the likelihood that the correct decoding has n ot
+been found. Its use signiﬁcantly improves the quality of the
+information that circulates after decoding a component cod e.
+Consequently, GRAND can use powerful component codes
+with multiple bits of redundancy, while providing better so ft-
+output than traditional approaches.
+The merit of this soft-output is demonstrated in Fig. 1 where
+BLER vs Eb/N0 in dB for the (4096,3249) LDPC in the 5G
+New Radio standard is plotted. Also shown is the performance
+of a simple product code [19], a (4096,3249) = (64 ,57)2
+Extended Bose-Chaudhuri-Hocquenghem (eBCH) code, when
+decoded with the 1-line version of ORBGRAND [24] using
+list-decoding and Pyndiah’s soft-output methodology [4, 3 6]
+under-performs in comparison with the LDPC code. When, de-
+coded with the new soft-output developed here it experience s
+a ca. 0.5dB improvement. Even though product codes are
+known to have poor minimum distance, the new high-quality
+soft-output results in the product code having performance
+comparable to the LDPC code at lower SNR and better than
+the LDPC code at moderate signal-to-noise ratio (SNR).
+Moreover, the lower panel of the ﬁgure shows the average
+number of code-book queries required for the decoding, whic h
+serves as a proxy for decoding complexity, latency, and ener gy
+consumption [24, 26, 30], showing reduced effort for improv ed
+decoding. Note that each iteration of the GRAND decoding
+of a product code all rows or column component codes can
+be decoded in parallel, which would result in extremely low
+latency. Comparison results for LDPCs and product codes of
+different dimensions are show in VII and establish consis-
+tent or better ﬁndings: when decoded with GRAND and its
+soft output, Elias’s product codes provide as good or better
+performance as state-of-the-art codes and do so with modest
+complexity.
+Variants on the theme of product codes, such as staircase
+codes [37] and generalized low-density parity-check (GLDP C)
+codes [38], were developed speciﬁcally to overcome the poor
+minimum distance of the original design. In section VII we
+shall see that decoding GLDPC code proposed in [39] with
+ORBGRAND can result in signiﬁcantly better performance
+than LDPC codes in the 5G standard at higher SNR.0 1 2 3 410−710−610−510−410−310−210−1100
+Eb/N0in dBBLER(4096,3249) 5G LDPC, Imax= 50
+(64,57)2eBCH, ORBGRAND Pyndiah, Imax= 20
+(64,57)2eBCH, ORBGRAND, Imax= 20
+0 1 2 3 4105106
+Eb/N0in dBavg. # of Guesses(64,57)2eBCH, ORBGRAND Pyndiah
+(64,57)2eBCH, ORBGRAND
+Fig. 1: Decoding performance of the (4096,3249) 5G LDPC
+with maximum iterations Imax= 50 as compared to a
+(4096,3249) = (64 ,57)2eBCH product code decoded two
+ways. First, turbo-decoded as in [4], with αandβparameters
+taken from there and maximum iteration number Imax= 20 , but
+using1line-ORBGRAND for list decoding with list size L= 4
+as in [36]. Second, turbo-decoded using α= 0.5and the soft-
+output proposed here with Imax= 20 , where lists are added to
+untilL= 4or the probability that the correct codeword is in the
+list is at least p∗= 0.999according to the soft-output. Upper
+panel: BLER performance. Lower panel: average number of
+queries until a decoding with 1-line Ordered Reliability Bi ts
+GRAND (ORBGRAND).II. P ER-BLOCK SOFT -OUTPUT
+For any channel coding scheme, it would be desirable if
+error correction decoders could produce soft-output in the form
+of a conﬁdence measure in the correctness of a decoded block.
+In seminal work on error exponents, Forney [40] proposed an
+approximate computation of the correctness probability of a
+decoded block. Forney’s approach necessitates the use of a l ist
+decoder, which signiﬁcantly restricts its applicability, and we
+shall show that the approach provides an inaccurate estimat e
+in channels with challenging noise conditions. Regardless , its
+potential utility warranted further investigation, e.g. [ 41].
+With the recent introduction of CRC-Assisted Polar (CA-
+Polar) codes to communications standards [42], Forney’s ap -
+proximation has received renewed interest [43] as one popul ar
+method of decoding CA-Polar codes, CRC-Assisted Succes-
+sive Cancellation List (CA-SCL) decoding, generates a list of
+candidate codewords as part of its execution, e.g. [44–47]. For
+convolution or trellis codes, the Viterbi algorithm [48] ca n be
+modiﬁed to produce soft-output at the sequence level [49],
+which has been used in coding schemes with multiple layers
+of decoding [50] and to inform repeat transmission requests
+[51][49].
+The method we develop can be readily used with any
+moderate redundancy code, can be evaluated without the need
+to list decode, and the estimate remains accurate in noisy
+channel conditions. Distictively and crucially, the metho d
+provides an estimate of the likelihood that the correct deco ding
+has not yet been found. As a result, accurate per-bit soft-
+output can be created through a weighted mixture of proposed
+decodings and the soft-input.
+III. B ACKGROUND ON GRAND
+We ﬁrst deﬁne notation used in the rest of the paper. Let C
+be a codebook containing 2kbinary codewords each of length
+nbits. Let Xn: Ω→ C be a codeword drawn uniformly
+at random from the codebook and let Nn: Ω→ {0,1}n
+denote the binary noise effect that the channel has on that
+codeword during transmission; that is, Nnencodes the binary
+difference between the demodulated received sequence and t he
+transmitted codeword, rather than the potentially continu ous
+channel noise. Then Yn=Xn⊕Nnis the demodulated
+channel output, with ⊕being the element-wise binary addition
+operator. Let Rn: Ω→Rndenote soft channel output per-bit.
+Lowercase letters represent realizations of random variab les,
+with the exception of zn, which is the realization of Nn,
+which is assumed independent of the channel input but could
+be correlated.
+All GRAND algorithms operate by progressing through
+a series of noise effect guesses zn,1,zn,2,...∈ {0,1}n,
+whose order is informed by channel statistics, e.g. [22], or
+soft-input, e.g. [24], until it ﬁnds one, zn,q, that satisﬁes
+ˆxn
+q=yn⊖zn,q∈ C, where⊖inverts the effect of the noise
+on the channel output. If the guesses are in channel-depende nt
+decreasing order of likelihood, then zn,qis a maximum-
+likelihood estimate of Nnandˆxn
+qis a maximum-likelihood
+estimate of the transmitted codeword Xn. Since this guessingprocedure does not depend on codebook structure, GRAND
+can decode any moderate redundancy code as long as it has
+a method for checking codebook membership. For a linear
+block code with an (n−k)×nparity-check matrix H,ˆxn
+qis a
+codeword if Hˆxn
+q= 0n[52], where ˆxn
+qis taken to be a column
+vector and 0nis the zero vector. To generate a decoding list
+Lof sizeL, GRAND continues until Lcodewords are found
+[25, 36].
+Underlying GRAND is a race between two random vari-
+ables, the number of guesses until the true codeword is
+identiﬁed and the number of guesses until an incorrect code-
+word is identiﬁed. Whichever of these processes ﬁnishes ﬁrs t
+determines whether the decoding identiﬁed by GRAND is
+correct. The guesswork function G:{0,1}n→ {1,...,2n},
+which depends on soft-input Rnin the soft detection setting,
+maps a noise effect sequence to its position in GRAND’s
+guessing order, so that G(zn,i) =i. ThusG(Nn)is a
+random variable that encodes the number of guesses until the
+transmitted codeword would be identiﬁed. Note that as Nnis
+independent of Xn, we have that
+P(G(Nn) =q|Rn=rn) =pNn|Rn(zn,q|rn).
+Consequently, as Yn=Xn⊕Nn, for any cn∈ C we have
+that
+pXn|Rn(cn|rn) =pNn|Rn(cn⊕yn|rn) (1)
+and so the a posteriori likelihood of a proposed decoding’s
+correctness can be identiﬁed with the likelihood of the nois e
+effect whose inversion would take the demodulated string to
+that codeword.
+IfW(i): Ω→ {1,...,2n−1}is the number of guesses until
+thei-th incorrect codeword is identiﬁed, not accounting for
+the query that identiﬁes the correct codeword, then GRAND
+returns a correct decoding whenever G(Nn)≤W(1)and a
+list of length Lcontaining the correct codeword whenever
+G(Nn)≤W(L). Analysis of the race between these two
+processes leads to the derivation of the soft-output in this
+paper.
+IV. B ACKGROUND ON SOFT OUTPUT
+Forney’s work on error exponents [40] resulted in an ap-
+proximation for soft-output. Given channel output rn, which
+serves as soft-input to the decoder, and a decoding output
+cn,∗∈ C, the probability that the decoding is correct is
+pXn|Rn(cn,∗|rn) =fRn|Xn(rn|cn,∗)/summationdisplay
+cn∈CfRn|Xn(rn|cn). (2)
+Based on this formula, Forney derived an optimal threshold
+for determining whether a decoding should be marked as an
+erasure. Computing the sum in the denominator of eq. (2),
+would, however, require 2kcomputations, which is infeasible
+for codebooks of practical size. As a result, Forney suggest edthat given a decoding list L ⊆ C withL >1codewords the
+denominator be approximated by
+/summationdisplay
+cn∈LfRn|Xn(rn|cn),
+which assumes that the sum of all terms outside the list,
+/summationdisplay
+cn∈C\LfRn|Xn(rn|cn), (3)
+is0. With
+cn,∗= argmax
+cn∈LfRn|Xn(rn|cn),
+Forney’s approximation results in an estimate of the correc t-
+ness probability of cn,∗that is no smaller than 1/L. For exam-
+ple, ifL= 2, then the correctness estimate is bounded below
+by1/2. Having the codewords of highest likelihood in the
+decoding list will clearly give the most accurate approxima tion
+as their likelihoods dominate the sum.
+Foreshadowing, a signiﬁcant source of improvement in the
+soft-output that results from the method developed here for
+GRAND is that it naturally provides an estimate of eq. (3),
+even with a single decoding, i.e. L= 1 . As a result, it
+generates better approximations to the denominator in eq. ( 2),
+particularly in noisy channels. This enables an estimate of the
+correctness of a single decoding, i.e. for L= 1, which is not
+possible from Forney’s approximation, as well as an estimat e
+of the likelihood that the decoding has not been found (i.e. i s
+not in the list):
+pXn|Rn(C\L|rn) =/summationdisplay
+cn∈C\LfRn|Xn(rn|cn)
+/summationdisplay
+cn∈CfRn|Xn(rn|cn).
+It is the unique feature of having an the estimate of eq. (3)
+that enables enable substantially improved soft-output pe r bit.
+WithXn= (X1,...,X n)being the bits of a code-word of
+lengthn, the posterior log-likelihood ratio that a bit is 1or
+0is the weighted sum across codewords in the list and the
+soft-input should the codeword not be in the list
+LLRi=
+log/summationdisplay
+cn∈L:ci=0pXn|Rn(cn|rn)+pXn|Rn(C\L|rn)pY|Ri(0|ri)
+/summationdisplay
+cn∈L:ci=1pXn|Rn(cn|rn)+pXn|Rn(C\L|rn)pY|Ri(1|ri)
+(4)
+As noted, one other downside of Forney’s approach is that
+it requires a list of codewords, which most decoders do not
+provide. For this reason, a method has recently been propose d
+to estimate the likelihood of the second-most likely codewo rd
+given the ﬁrst [53]. A variety of alternative schemes have al so
+been suggested for making erasure decisions, a summary of
+which can be found in [54].V. GRAND P ERBLOCK SOFT-OUTPUT
+Throughout this section, we shall assume that the codebook,
+C, consists of 2kcodewords drawn uniformly at random
+from{0,1}n, although the derivation generalises to higher-
+order symbols. For GRAND algorithms we ﬁrst derive exact
+expressions, followed by readily computable approximatio ns,
+for the probability that the transmitted codeword is each
+element of a decoding list or is not conatined within it. As a
+corollary, we obtain a formula for the probability that a sin gle-
+codeword GRAND output is correct or incorrect. In Section
+VI we demonstrate the formulae provide excellent estimates
+for structured codebooks.
+Theorem 1 (A posteriori likelihoods for list decoding of
+a uniformly random codebook) .Given the soft information
+Rn=rnthat determines the query order, let G(Nn)be the
+number of codebook queries until the noise effect sequence
+Nnis identiﬁed. Let W1,...,W 2k−1be selected uniformly
+at random without replacement from {1,...,2n−1}and
+deﬁne their rank-ordered version W(1)<···< W(2k−1).
+With the true noise effect not counted, W(i)corresponds to
+the location in the guesswork order of the i-th erroneous
+decoding in a codebook constructed uniformly-at-random.
+Deﬁne the partial vectors Wj
+(i)= (W(i),...,W (j))for each
+i≤j∈ {1,...,2k−1}.
+Assume that a list of L≥1codewords are identiﬁed by a
+GRAND decoder at query numbers q1< ... < q L. Deﬁne the
+associated partial vectors qj
+i= (qi,...,q j)for each i≤j∈
+{1,...,2k−1}, and
+qL,{i}
+1= (q1,...,q i−1,qi+1−1,...,q L−1), (5)
+which is the vector qL
+1but with the entry qiomitted and one
+subtracted for all entries from qi+1onwards. Deﬁne
+P(A) =/summationdisplay
+q>LpNn|Rn(zn,q|rn)pWL
+(1)(qL
+1)
+which is associated with the transmitted codeword not being
+in the list, and, for each i∈ {1,...,L−1},
+P(Bi) =pNn|Rn(zn,qi|rn)pWL−1
+(1)(qL,{i}
+1),
+which is associated with the transmitted codeword being the
+i-th element of the list, and
+P(BL) =pNn|Rn(zn,qL|rn)/summationdisplay
+k≥LpWL−1
+(1),W(L)(qL−1
+1,qk),
+which is associated with the transmitted codeword being the
+ﬁnal element of the list. Then the probability that i-th codeword
+is correct is
+P(Bi)
+P(A)+/summationtextL
+i=1P(Bi). (6)
+and the probability that the correct decoding is not in the li st
+is
+P(A)
+P(A)+/summationtextL
+i=1P(Bi). (7)Proof. Forq∈ {1,...,2n}, deﬁneW(i),q=W(i)+1{W(i)≥q},
+so that any W(i)that is greater than or equal to qis incre-
+mented by one. Note that W(i),G(Nn)encodes the locations of
+erroneous codewords in the guesswork order of a randomly
+constructed codebook given the value of G(Nn)and, in
+particular, W(i),G(Nn)corresponds the number of queries until
+thei-th incorrect codeword is found given G(Nn).
+Given the soft information Rn=rnthat determines the
+query order, we identify the event that the decoding is not in
+the list as
+A=/braceleftBig
+G(Nn)> qL,WL
+(1)=qL
+1/bracerightBig
+and the events where the decoding is the i-th element of the
+list by
+Bi=/braceleftBig
+Wi−1
+(1)=qi−1
+1,G(Nn) =qi,
+WL−1
+(i)+1 =qL
+i+1,W(L)≥qL/bracerightBig
+where the ﬁnal condition is automatically met for i=
+{1,...,L−1}but not for i=L. The conditional probability
+that a GRAND decoding is not one of the elements in the list
+given that Lelements have been found is
+P/parenleftBigg
+A/vextendsingle/vextendsingle/vextendsingle/vextendsingle/vextendsingleAL/uniondisplay
+i=1Bi,Rn=rn/parenrightBigg
+=P(A|Rn=rn)/slashBigg
+P/parenleftBigg
+AL/uniondisplay
+i=1Bi/vextendsingle/vextendsingle/vextendsingle/vextendsingle/vextendsingleRn=rn/parenrightBigg
+. (8)
+As all of the AandBievents are disjoint, to compute eq. (8)
+it sufﬁces to simplify P(A)andP(Bi)fori∈ {1,...,L}
+to evaluate the a posteriori likelihood that the transmitte d
+codeword is not in the list.
+Consider the numerator,
+P(A) =P(G(Nn)> qL,WL
+(1)=qL
+1|Rn=rn)
+=/summationdisplay
+q>LpNn|Rn(zn,q|rn)pWL
+(1)(qL
+1),
+where we have used the fact that G(Nn)is independent of
+WL
+(1)by construction. In considering the denominator, we need
+only be concerned with the terms P(Bi)corresponding to a
+correct codebook being identiﬁed at query qi, for which
+P(Bi) =P(G(Nn) =qi,Wi−1
+(1)=qi−1
+1,
+WL−1
+(i)+1 =qL
+i+1,W(L)≥qL|Rn=rn)
+=P(G(Nn) =qi,WL−1
+(1)=qL,{i}
+1,
+W(L)≥qL|Rn=rn)
+=pNn|Rn(zn,qi|rn)/summationdisplay
+k≥LpWL−1
+(1),W(L)(qL,{i}
+1,qk),
+where we have used the deﬁnition of qL,{i}
+1 in eq. (5) and
+the independence. Thus the conditional probability that th e
+correct answer is not found in eq. (8) is given in eq. (7) and
+the conditional probability that a given element of the list is
+correct is given by eq. (6).Specializing to a list size L= 1, the formula in eq. (7) for
+the a posteriori likelihood that decoding is incorrect can b e
+expressed succinctly, as in the following corollary.
+Corollary 1 (A posteriori likelihood of a correct GRAND
+decoding for a uniformly random codebook) .The conditional
+probability that a GRAND decoding is correct given the ﬁrst
+codeword is identiﬁed on the q-th query is
+pNn|Rn(zn,q|rn)/summationdisplay
+j≥qpW(1)(j)
+pNn|Rn(zn,q|rn)/summationdisplay
+j≥qpW(1)(j)+/summationdisplay
+j>qpNn|Rn(zn,j|rn)pW(1)(q)
+whereW(1)is equal in distribution to the minimum of 2k−1
+numbers selected uniformly at random without replacement
+from{1,...,2n−1}.
+As a result of Theorem 1 and its corrollary, in order to
+compute the a posteriori probability of an incorrect decodi ng
+in Theorem 1, we need to evaluate or approximate:
+1)pNn|Rn(zn,q|rn)and/summationdisplay
+j≤qpNn|Rn(zn,j|rn);
+2)pWL
+(1)(qL
+1)and/summationdisplay
+k≥LpWL−1
+(1),W(L)(qL−1
+1,qk).
+During a GRAND algorithm’s execution, the evaluation of 1)
+can be achieved by calculating the likelihood of each noise
+effect query as it is made and retaining a running sum. For
+2), geometric approximations whose asymptotic precision c an
+be veriﬁed using the approach described in [20][Theorem 2]
+can be employed, resulting in the following corollaries for list
+decoding and single-codeword decoding, respectively.
+Corollary 2 (Approximate a posteriori likelihood of an incor-
+rect GRAND list decoding for a uniformly random codebook) .
+If eachW(i)givenW(i−1)is assumed to be geometrically
+distributed with probability of success (2k−1)/(2n−1), eq. (7)
+describing the a posteriori probability that list decoding does
+not contain the transmitted codeword can be approximated as
+
+1−qL/summationdisplay
+j=1pNn|Rn(zn,j|rn)
+/parenleftbigg2k−1
+2n−1/parenrightbigg
+L/summationdisplay
+i=1pNn|Rn(zn,qi|rn)
++
+1−qL/summationdisplay
+j=1pNn|Rn(zn,j|rn)
+/parenleftbigg2k−1
+2n−1/parenrightbigg(9)
+Proof. Deﬁne the geometric distribution’s probability of suc-
+cess to be φ= (2k−1)/(2n−1). Under the assumptions of
+the corollary, we have the formulae
+pWL
+(1)(qL
+1) = (1−φ)qL−LφL,
+fori∈ {1,...,L−1}
+pWL−1
+(1)(qL,{i}
+1) = (1−φ)qL−LφL−1,and
+P/parenleftBig
+WL−1
+(1)=qL−1
+1,W(L)≥qL/parenrightBig
+= (1−φ)qL−LφL−1.
+Using those expressions, simplifying eq. (7) gives eq. (9).
+To a slightly higher precision, one can use the following
+approximation, which accounts for eliminated queries and i s
+most succinctly expressed for a single-codeword decoding.
+Corollary 3 (Approximate a posteriori likelihood of an incor-
+rect GRAND decoding for a uniformly random codebook) .If
+W(1)is assumed to be geometrically distributed with proba-
+bility of success (2k−1)/(2n−q)afterq−1failed queries,
+eq.(7)describing the a posteriori probability that a decoding
+found after q1queries is incorrect can be approximated as
+
+1−q1/summationdisplay
+j=1pNn|Rn(zn,j|rn)
+2k−1
+2n−q1
+pNn|Rn(zn,q1|rn)+
+1−q1/summationdisplay
+j=1pNn|Rn(zn,j|rn)
+2k−1
+2n−q1.
+(10)
+Proof. Under the conditions of the corollary,
+P(W(1)=q1) =q1−1/productdisplay
+i=1/parenleftbigg
+1−2k−1
+2n−i/parenrightbigg2k−1
+2n−q1,
+from which eq. (7) simpliﬁes to (10).
+Taken together, these theorems and corollaries provide a
+simple accounting methodology from which GRAND can
+provide a posterior distribution on the correctness of each
+element of a list-decoding, including the possibility of a l ist of
+sizeL= 1, as well as the likelihood that the correct decoding
+has not been found. In particular, it sufﬁces to:
+1) know the code-dimensions, (n,k);
+2) record the likelihood of each noise-effect sequence
+that leads to a decoding, pNn|Rn(zn,qi|rn)fori∈
+{1,...,L}for a list of size L;
+3) and record the cumulative probability of all
+queries made until that ﬁnal element was found,/summationtextqL
+j=1pNn|Rn(zn,j|rn).
+Using these, the a posteriori probabilities per decoding bl ock,
+and the log-likelihood ratio per bit can be computed.
+VI. S OFT-OUTPUT ACCURACY
+Armed with the approximate a posteriori probabilities in eq .
+(9) and (10), we investigate their precision for random and
+structured codebooks. Fig. 2 depicts the accuracy of formul a
+(10) when used for random linear codes RLC (64,56). For
+context, Forney’s approximation with a list size L∈ {2,4}
+is also shown. Transmissions were simulated using a additiv e
+white Gaussian noise (AWGN) channel with binary phase-
+shift keying (BPSK) modulation. ORBGRAND [24] was used
+for soft-input decoding, which produced decoding lists of t he
+appropriate size for both soft-output methods.0 0 .2 0 .4 0 .6 0 .8 100.20.40.60.81
+Predicted block error probabilityBLER
+Forney,L= 2,2dB
+Forney,L= 2,4dB
+Forney,L= 4,2dB
+Forney,L= 4,4dB
+ORBGRAND, L= 1,2dB
+ORBGRAND, L= 1,4dB
+Fig. 2: The accuracy of soft-output when ORBGRAND is used
+to decode RLC (64,57). The predicted block error probability
+is compared to the measured BLER. If the soft-output was
+perfectly accurate, then the data would follow the line x=y.
+Fig. 2 plots the empirical block error rate (BLER) given
+the predicted block error probability evaluated using eq. ( 10).
+If the estimate was precise, then the plot would follow
+the linex=y, as the predicted error probability and the
+BLER would match. As RLCs are linear, codewords are
+not exactly distributed uniformly in the guesswork order,
+but the formula provides an accurate estimate. In contrast,
+Forney’s approximation signiﬁcantly underestimates the e rror
+probability, degrades in noisier channels, and has an estim ate
+of no greater than 1/L. Moreover, GRAND’s prediction has
+been made having only identiﬁed a single potential decoding .
+Fig. 3 is similar to Fig. 2 except for lists, where a list error
+occurs when the transmitted codeword is not in the decoding
+list. The measured list-BLER is plotted against the predict ed
+list-BLER in eq. (9). The prediction can be seen to be robust
+to channel condition, list size, and code structure.
+VII. L ONG CODE PERFORMANCE EVALUATION
+The results in Fig. 1 show that Elias’s original product
+code, which is known to have poor minimum distance, can
+give as good or better BLER performance as a 5G LDPC
+code when decoded with the new GRAND soft-output. We
+ﬁrst demonstrate that this holds consistently for other cod e
+dimensions.
+Fig. 4 shows a comparison for (256,121) LDPC and a
+(16,11)2eBCH product code, where it can be seen that the
+product code outperforms the LDPC in terms of both BLER
+and BER. The lower plot shows the average number of code-
+book queries performed by 1-line ORBGRAND per product
+code decoding. Based on an in silicon realization [30] of
+the landslide algorithm [24], this number of queries would
+result in energy efﬁcient decoding in hardware. Moreover,0 0 .2 0 .4 0 .6 0 .8 100.20.40.60.81
+Predicted list error probabilitylist-BLER
+RLC,L= 2,2dB
+RLC,L= 4,2dB
+RLC,L= 2,4dB
+RLC,L= 4,4dB
+eBCH,L= 2,2dB
+eBCH,L= 4,2dB
+eBCH,L= 2,4dB
+eBCH,L= 4,4dB
+Fig. 3: The accuracy of the predicted list error probability
+compared to the measured list-BLER. Parameters as in Fig.
+2, but with varying the channel noise, list size L∈ {2,4}, and
+the code types of RLC (64,57)and eBCH (64,57).
+during product code decoding, at each iteration all rows can
+be decoded in parallel, resulting in incredibly low latency . Fig.
+5 shows a similar comparison for the (1024,441) LDPC code
+from the 5G new radio (NR) standard and a (32,21)2eBCH
+product code, resulting in the same conclusion.
+Note that as GRAND algorithms can decode any moderate
+redundancy code, it is not conﬁned to eBCH codes. Fig. 6
+provides a further example of this where a (625,225) LDPC
+code is compared with a (25,15)2product code that uses a
+simple cyclic redundancy check (CRC) code as its component
+code. Again, the product code outperforms the LDPC code
+with fewer iterations and minimal complexity.
+Thus, when decoded in an iterative fashion with ORB-
+GRAND and the new soft-output, Elias’s product codes, which
+predate LDPC codes, offer comparable or better performance
+than the LDPC codes selected for 5G NR.
+While the LDPC codes used in 5G New Radio trade
+waterfall sharpness for an error ﬂoor, variants of product
+codes called GLDPC codes have been developed that have
+better minimum distance and much lower error ﬂoors. As with
+product codes, GLDPC code components can also be decoded
+in parallel, which would result in low-latency decoding. Fi g. 7
+provides results for one such example when a GLDPC devel-
+oped in [39] is decoded with 1-line ORBGRAND and the soft-
+output described here. The GLDPC results in a signiﬁcantly
+steeper waterfall BLER curve with a signiﬁcantly lower erro r
+ﬂoor, at the expense of slightly degraded performance at low er
+SNR, offering more design possibilities for future systems .
+VIII. D ISCUSSION
+Efﬁcient soft-detection decoding of powerful long, low-ra te
+error correction codes has long since been a core objective0 1 2 3 410−710−610−510−410−310−210−1100
+Eb/N0in dBBLER / BER(256,121) 5G LDPC, Imax= 50
+(16,11)2eBCH, ORBGRAND, Imax= 20
+5G LDPC, BER
+ORBGRAND, BER
+0 1 2 3 4103104105
+Eb/N0in dBavg. # of Guesses(16,11)2eBCH, ORBGRAND
+Fig. 4: Decoding performance of the (256,121) 5G LDPC with
+maximum number of iterations Imax= 50 as compared to
+a(256,251) = (16 ,11)2eBCH product code decoded using
+1line-ORBGRAND for list decoding with list size L= 4 ,
+α= 0.5and maximum iteration number Imax= 20 . Upper
+panel: BLER and BER performance. Lower panel: average
+number of queries until a decoding with GRAND.
+in information theory. The successful approach has been to
+create long codes by appropriate concatenation of componen t
+codes that can provide soft-output from their soft-input in an
+iterative fashion. Turbo codes use powerful component code s
+but approximate soft output while LDPC codes use weak
+component codes but accurate soft-output.
+Here we demonstrate that GRAND can bridge this gap by
+decoding powerful component codes and providing accurate
+soft-output with no additional computational burden. We ha ve
+shown that when decoded with 1-line ORBGRAND simple
+product-like codes that avail of powerful, high-rate compo nent0 1 2 3 410−710−610−510−410−310−210−1100
+Eb/N0in dBBLER / BER(1024,441) 5G LDPC, Imax= 50
+(32,21)2eBCH, ORBGRAND, Imax= 20
+5G LDPC, BER
+ORBGRAND, BER
+0 1 2 3 4105106107
+Eb/N0in dBavg. # of Guesses(32,21)2eBCH, ORBGRAND
+Fig. 5: Decoding performance of the (1024,441) 5G LDPC
+withImax= 50 as compared to a (1024,441) = (32 ,21)2
+eBCH product code decoded using 1line-ORBGRAND for list
+decoding with maximum list size Lmax= 4, where lists are
+terminated if they have probability at least p∗= 0.999 of
+containing the correct decoding according to the soft-outp ut,
+α= 0.5and maximum iteration number Imax= 20 . Upper
+panel: BLER and BER performance. Lower panel: average
+number of queries until a decoding with GRAND.0 1 2 3 410−710−610−510−410−310−210−1100
+Eb/N0in dBBLER(625,225) 5G LDPC, Imax= 50
+(25,15)2CRC ORBGRAND, Imax= 20
+5G LDPC, BER
+ORBGRAND, BER
+0 1 2 3 4105106107
+Eb/N0in dBavg. # of Guesses(25,15)2CRC ORBGRAND
+Fig. 6: Decoding performance of the (625,225) 5G LDPC with
+maximum number of iterations Imax= 50 as compared to a
+(625,225) = (25 ,15)2CRC2b9 product code decoded using
+1line-ORBGRAND for list decoding with list size L= 4,α=
+0.5and maximum iteration number Imax= 20 . Upper panel:
+BLER and BER performance. Lower panel: average number of
+queries until a decoding with GRAND.
+codes can outperform the LDPC codes in the 5G standard.
+Circuit designs and a realization of ORBGRAND in hardware
+[30] illustrate that code-book queries can be parallelised ,
+resulting in low latency, low energy ORBGRAND decoding
+of component codes. The component codes can be decoded in
+parallel to generate ultra low-latency long-code implemen ta-
+tions. Due to that feature, it is possible to trade-off decod ing
+area versus latency in hardware by determining the number of
+ORBGRAND circuits in a chip. Moreover, the product-code-
+like design is highly modular and can be readily adapted to
+distinct lengths and rates without resorting to puncturing or0 1 2 3 410−710−610−510−410−310−210−1100
+Eb/N0in dBBLER(1024,640) 5G LDPC, Imax= 50
+(1024,640) GLDPC, ORBGRAND, Imax= 20
+0 1 2 3 4104105106
+Eb/N0in dBavg. # of Guesses(1024,640) GLDPC, ORBGRAND
+Fig. 7: Decoding performance of the (1024,640) 5G LDPC
+withImax= 50 as compared to a (1024,640) GLDPC code [39]
+with eBCH nodes, 1line-ORBGRAND with maximum list size
+Lmax= 4, where lists are terminated if they have probability at
+leastp∗= 0.999of containing the correct decoding according
+to the soft-output, and maximum iteration number Imax= 20 .
+Upper panel: BLER performance. Lower panel: average number
+of queries until a decoding with GRAND.
+signiﬁcantly changing the architecture of the decoder.
+While we demonstrate the approach with product and
+GLDPC codes, a much broad palette of more sophisticated
+and ultimately more powerful long, low-rate codes now be-
+comes practical for soft detection decoding, offering a via ble
+alternative to LDPC codes as well as additional possibiliti es.
+REFERENCES
+[1] K. Galligan, P. Yuan, M. M´ edard, and K. R. Duffy,
+“Upgrade error detection to prediction with GRAND,”
+inIEEE Globecom , 2023.[2] C. E. Shannon, “A mathematical theory of communica-
+tion,” The Bell System Technical Journal , vol. 27, no. 3,
+pp. 379–423, 1948.
+[3] G. D. Forney, Concatenated Codes . MIT Press, 1966.
+[4] R. Pyndiah, “Near-optimum decoding of product codes:
+block turbo codes,” IEEE Trans. Commun. , vol. 46, no. 8,
+pp. 1003–1010, 1998.
+[5] D. J. Costello and G. D. Forney, “Channel coding: The
+road to channel capacity,” Proc. IEEE , vol. 95, no. 6, pp.
+1150–1177, 2007.
+[6] R. Gallager, “Low-density parity-check codes,” IRE
+Trans. Inf. Theory , vol. 8, pp. 21–28, 1962.
+[7] M. Sipser and D. Spielman, “Expander codes,” IEEE
+Trans. Inf. Theory , vol. 42, no. 6, pp. 1710–1722, 1996.
+[8] D. J. MacKay and R. M. Neal, “Near shannon limit per-
+formance of low density parity check codes,” Electron.
+Lett., vol. 33, no. 6, pp. 457–458, 1997.
+[9] D. J. MacKay, Information theory, inference and learning
+algorithms . Cambridge university press, 2003.
+[10] T. J. Richardson and R. L. Urbanke, “Efﬁcient encoding
+of low-density parity-check codes,” IEEE Trans. Inf.
+Theory , vol. 47, no. 2, pp. 638–656, 2001.
+[11] ——, “The capacity of low-density parity-check codes
+under message-passing decoding,” IEEE Trans. Inf. The-
+ory, vol. 47, no. 2, pp. 599–618, 2001.
+[12] S.-Y . Chung, G. D. Forney, T. J. Richardson, and R. Ur-
+banke, “On the design of low-density parity-check codes
+within 0.0045 dB of the Shannon limit,” IEEE Commun.
+Lett., vol. 5, no. 2, pp. 58–60, 2001.
+[13] M. M. Mansour and N. R. Shanbhag, “High-throughput
+LDPC decoders,” IEEE Trans. Very Large Scale Integr.
+VLSI Syst. , vol. 11, no. 6, pp. 976–996, 2003.
+[14] D. E. Hocevar, “A reduced complexity decoder architec-
+ture via layered decoding of LDPC codes,” in IEEE SiPS ,
+2004, pp. 107–112.
+[15] Z. Zhang, V . Anantharam, M. J. Wainwright, and
+B. Nikolic, “An efﬁcient 10GBASE-T ethernet LDPC
+decoder design with low error ﬂoors,” IEEE J. of Solid-
+State Circuits , vol. 45, no. 4, pp. 843–855, 2010.
+[16] P. Hailes, L. Xu, R. G. Maunder, B. M. Al-Hashimi, and
+L. Hanzo, “A survey of FPGA-based LDPC decoders,”
+IEEE Commun. Surv. Tutor. , vol. 18, no. 2, pp. 1098–
+1122, 2015.
+[17] K.-J. Kim, S. Myung, S.-I. Park, J.-Y . Lee, M. Kan,
+Y . Shinohara, J.-W. Shin, and J. Kim, “Low-density
+parity-check codes for ATSC 3.0,” IEEE Trans. Broad-
+cast., vol. 62, no. 1, pp. 189–196, 2016.
+[18] T. Richardson and S. Kudekar, “Design of low-density
+parity check codes for 5G new radio,” IEEE Commun.
+Mag. , vol. 56, no. 3, pp. 28–34, 2018.
+[19] P. Elias, “Error-free Coding,” Trans. IRE Prof. Group Inf.
+Theory , vol. 4, no. 4, pp. 29–37, 1954.
+[20] K. R. Duffy, J. Li, and M. Medard, “Capacity-achieving
+guessing random additive noise decoding,” IEEE Trans.
+Inf. Theory , vol. 65, no. 7, pp. 4023–4040, 2019.
+[21] K. Galligan, A. Solomon, A. Riaz, M. M´ edard, R. T.Yazicigil, and K. R. Duffy, “IGRAND: decode any
+product code,” in IEEE GLOBECOM , 2021.
+[22] W. An, M. M´ edard, and K. R. Duffy, “Keep the
+bursts and ditch the interleavers,” IEEE Trans. Commun. ,
+vol. 70, no. 6, pp. 3655–3667, 2022.
+[23] K. R. Duffy, M. M´ edard, and W. An, “Guessing random
+additive noise decoding with symbol reliability informa-
+tion (SRGRAND),” in IEEE Trans. Commun. , vol. 70,
+no. 1, 2022, pp. 3–18.
+[24] K. R. Duffy, W. An, and M. Medard, “Ordered reliability
+bits guessing random additive noise decoding,” IEEE
+Trans. Signal Proc. , vol. 70, pp. 4528 – 4542, 2022.
+[25] S. M. Abbas, M. Jalaleddine, and W. J. Gross, “List-
+GRAND: A practical way to achieve maximum likeli-
+hood decoding,” IEEE Trans. Very Large Scale Integr.
+Syst., no. 1, pp. 43–54, 2022.
+[26] W. An, M. M´ edard, and K. R. Duffy, “Soft decoding
+without soft demapping with orbgrand,” in IEEE ISIT ,
+2023, pp. 1080–1084.
+[27] K. R. Duffy, M. Grundei, and M. M´ edard, “Using chan-
+nel correlation to improve decoding – ORBGRAND-AI,”
+inIEEE Globecom , 2023.
+[28] A. Cohen, R. G. D’Oliveira, K. R. Duffy, J. Woo, and
+M. M´ edard, “AES as error correction: Cryptosystems for
+reliable communication,” IEEE Commun. Lett , vol. 27,
+no. 8, pp. 1964–1968, 2023.
+[29] A. Riaz, V . Bansal, A. Solomon, W. An, Q. Liu, K. Gal-
+ligan, K. R. Duffy, M. Medard, and R. T. Yazicigil,
+“Multi-Code Multi-Rate Universal Maximum Likelihood
+Decoder using GRAND,” in ESSCIRC , 2021.
+[30] A. Riaz, A. Yasar, F. Ercan, W. An, J. Ngo, K. Galligan,
+M. M´ edard, K. R. Duffy, and R. T. Yazicigil, “A sub-
+0.8pJ/b 16.3Gbps/mm2universal soft-detection decoder
+using ORBGRAND in 40nm CMOS,” in IEEE ISSCC ,
+2023.
+[31] C. Condo, V . Bioglio, and I. Land, “High-performance
+low-complexity error pattern generation for ORB-
+GRAND decoding,” in IEEE GLOBECOM , 2021.
+[32] S. M. Abbas, T. Tonnellier, F. Ercan, and W. J. Gross,
+“High-Throughput VLSI Architecture for GRAND,” in
+IEEE Workshop on Sig. Proc. Sys. , 2020, pp. 681–693.
+[33] S. M. Abbas, T. Tonnellier, F. Ercan, M. Jalaled-
+dine, and W. J. Gross, “High-Throughput and Energy-
+Efﬁcient VLSI Architecture for Ordered Reliability Bits
+GRAND,” IEEE Trans. on VLSI Sys. , vol. 30, no. 6, 2022.
+[34] C. Condo, “A ﬁxed latency ORBGRAND decoder archi-
+tecture with LUT-aided error-pattern scheduling,” IEEE
+Trans. Circuits Sys. I: Regular Papers , vol. 69, no. 5, pp.
+2203–2211, 2022.
+[35] ——, “Iterative soft-input soft-output decoding with
+ordered reliability bits GRAND,” in IEEE Globecom
+Workshops , 2022, pp. 510–515.
+[36] K. Galligan, M. M´ edard, and K. R. Duffy, “Block turbo
+decoding with ORBGRAND,” in CISS , 2023.
+[37] B. P. Smith, A. Farhood, A. Hunt, F. R. Kschischang, and
+J. Lodge, “Staircase Codes: FEC for 100 Gb/s OTN,” J.Light. Technol. , vol. 30, no. 1, pp. 110–117, 2012.
+[38] G. Liva, W. E. Ryan, and M. Chiani, “Quasi-cyclic
+generalized ldpc codes with low error ﬂoors,” IEEE
+Trans. Commun. , vol. 56, no. 1, pp. 49–57, 2008.
+[39] M. Lentmaier, G. Liva, E. Paolini, and G. Fettweis,
+“From product codes to structured generalized ldpc
+codes,” in CHINACOM , 2010.
+[40] G. Forney, “Exponential error bounds for erasure, list ,
+and decision feedback schemes,” IEEE Trans. Inf. The-
+ory, vol. 14, no. 2, pp. 206–220, 1968.
+[41] E. Hof, I. Sason, and S. Shamai, “Performance bounds
+for erasure, list, and decision feedback schemes with
+linear block codes,” IEEE Trans. Inf. Theory , vol. 56,
+no. 8, pp. 3754–3778, 2010.
+[42] 3GPP, “NR; Multiplexing and channel coding,” 3rd Gen-
+eration Partnership Project (3GPP), Technical Speciﬁca-
+tion (TS) 38.21, 2019, version 15.5.0.
+[43] A. Sauter, B. Matuz, and G. Liva, “Error detection strat e-
+gies for CRC-concatenated polar codes under successive
+cancellation list decoding,” in CISS , 2023.
+[44] K. Niu and K. Chen, “CRC-aided decoding of Polar
+codes,” IEEE Commun. Letters , vol. 16, no. 10, pp. 1668–
+1671, 2012.
+[45] I. Tal and A. Vardy, “List Decoding of Polar Codes,”
+IEEE Trans. Inf. Theory , vol. 61, no. 5, pp. 2213–2226,
+2015.
+[46] A. Balatsoukas-Stimming, M. B. Parizi, and A. Burg,
+“LLR-based successive cancellation list decoding of Po-
+lar codes,” IEEE Trans. Signal Process. , vol. 63, no. 19,
+pp. 5165–5179, 2015.
+[47] X. Liang, J. Yang, C. Zhang, W. Song, and X. You,
+“Hardware efﬁcient and low-latency ca-scl decoder based
+on distributed sorting,” in IEEE GLOBECOM . IEEE,
+2016, pp. 1–6.
+[48] G. Forney, “The Viterbi algorithm,” Proc. of the IEEE ,
+vol. 61, pp. 268–278, 1973.
+[49] A. Raghavan and C. Baum, “A reliability output Viterbi
+algorithm with applications to hybrid ARQ,” IEEE Trans.
+Inf. Theory , vol. 44, pp. 1214–1216, 1998.
+[50] J. Hagenauer and P. Hoeher, “A Viterbi algorithm with
+soft-decision outputs and its applications,” in IEEE
+GLOBECOM , vol. 3, 1989, pp. 1680–1686.
+[51] H. Yamamoto and K. Itoh, “Viterbi decoding algorithm
+for convolutional codes with repeat request,” IEEE Trans.
+Inf. Theory , vol. 26, no. 5, pp. 540–547, 1980.
+[52] S. Lin and D. J. Costello, Error control coding: funda-
+mentals and applications . Pearson/Prentice Hall, 2004.
+[53] J. Freudenberger, D. Nicolas Bailon, and M. Saﬁeh,
+“Reduced complexity hard- and soft-input BCH decod-
+ing with applications in concatenated codes,” IET Circ.
+Device Syst. , vol. 15, no. 3, pp. 284–296, 2021.
+[54] T. Hashimoto, “Composite scheme LR+Th for decoding
+with erasures and its effective equivalence to Forney’s
+rule,” IEEE Trans. Inf. Theory , vol. 45, no. 1, pp. 78–93,
+1999.

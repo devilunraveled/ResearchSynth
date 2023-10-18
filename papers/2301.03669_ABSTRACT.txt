@@ -1,0 +1,25 @@
+Draft version January 11, 2023
+Typeset using L ATEX default style in AASTeX631
+Moist convection is most vigorous at intermediate atmospheric humidity
+Jacob T. Seeley1and Robin D. Wordsworth1
+1Department of Earth and Planetary Sciences
+Harvard University
+Cambridge, MA 02461, USA
+ABSTRACT
+In Earth's current climate, moist convective updraft speeds increase with surface warming. This
+trend suggests that very vigorous convection might be the norm in extremely hot and humid atmo-
+spheres, such as those undergoing a runaway greenhouse transition. However, theoretical and numerical
+evidence suggests that convection is actually gentle in water vapor-dominated atmospheres, implying
+that convective vigor may peak at some intermediate humidity level. Here, we perform small-domain
+convection-resolving simulations of an Earth-like atmosphere over a wide range of surface temperatures
+and conrm that there is indeed a peak in convective vigor, which we show occurs near Ts'330 K.
+We show that a similar peak in convective vigor exists when the relative abundance of water vapor
+is changed by varying the amount of background (non-condensing) gas at xed Ts, which may have
+implications for Earth's climate and atmospheric chemistry during the Hadean and Archean. We also
+show that Titan-like thermodynamics (i.e., a thick nitrogen atmosphere with condensing methane and
+low gravity) produce a peak in convective vigor at Ts'95 K, which is curiously close to the current
+surface temperature of Titan. Plotted as functions of the saturation specic humidity at cloud base,
+metrics of convective vigor from both Earth-like and Titan-like experiments all peak when cloud-base
+air contains roughly 10% of the condensible gas by mass. Our results point to a potentially common
+phenomenon in terrestrial atmospheres: that moist convection is most vigorous when the condensible
+component is between dilute and non-dilute abundance.

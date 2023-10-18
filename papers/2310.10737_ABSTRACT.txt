@@ -1,0 +1,30 @@
+Outperforming 5 LDPCs with GRAND over long,
+low rate codes - making a long story short
+
+Abstract —We establish that a large and ﬂexible class of long,
+high redundancy error correcting codes can be efﬁciently an d
+accurately decoded with guessing random additive noise dec od-
+ing (GRAND). Performance evaluation demonstrates that it i s
+possible to construct simple concatenated codes that outpe rform
+low-density parity-check (LDPC) codes in the 5G New Radio
+standard. The concatenated structure enables many desirab le
+features, including: low-complexity hardware-friendly e ncoding
+and decoding; high levels of ﬂexibility in length and rate th rough
+modularity; and high levels of parallelism in decoding that enable
+low latency.
+Central to this is the development of a method through which
+any soft-input GRAND algorithm can provide soft-output in t he
+form of an accurate a posteriori estimate of the likelihood t hat a
+decoding is correct or, in the case of list decoding, the like lihood
+that each element of the list is correct. The key distinguish ing
+feature of the soft-output in comparison to other methods is
+the provision of an estimate that the correct decoding has no t
+been found, even when providing a single decoding. That per-
+block soft-output can be converted into accurate per-bit so ft-
+output by a weighted sum that includes a term for the soft-
+input. Crucially, implementing the method for generating s oft-
+output adds negligible additional computation and memory t o
+the existing decoding process, and using it results in a prac tical
+alternative to LDPC codes.
+Index Terms —GRAND, concatenated codes, product cods,
+LDPC, Generalized LDPC

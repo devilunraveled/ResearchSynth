@@ -3,7 +3,7 @@ sys.path.append('..')
 
 from PyPDF2 import PdfReader
 
-def Parser( pdfFile = '../papers/SampleResearchPaper.pdf'):
+def Parser( pdfFile = '../papers/2301.03669.pdf'):
     # First task is to convert the pdf file to a text file.
     reader = PdfReader(pdfFile)
     content = ""
