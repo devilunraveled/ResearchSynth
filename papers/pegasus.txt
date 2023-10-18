@@ -1,3 +1,51 @@
+PEGASUS: Pre-training with Extracted Gap-sentences for
+Abstractive Summarization
+Jingqing Zhang* 1Yao Zhao* 2Mohammad Saleh2Peter J. Liu2
+Abstract
+Recent work pre-training Transformers with
+self-supervised objectives on large text corpora
+has shown great success when ﬁne-tuned on
+downstream NLP tasks including text summa-
+rization. However, pre-training objectives tai-
+lored for abstractive text summarization have
+not been explored. Furthermore there is a
+lack of systematic evaluation across diverse do-
+mains. In this work, we propose pre-training
+large Transformer-based encoder-decoder mod-
+els on massive text corpora with a new self-
+supervised objective. In PEGASUS, important
+sentences are removed/masked from an input doc-
+ument and are generated together as one output
+sequence from the remaining sentences, similar
+to an extractive summary. We evaluated our best
+PEGASUS model on 12 downstream summariza-
+tion tasks spanning news, science, stories, instruc-
+tions, emails, patents, and legislative bills. Experi-
+ments demonstrate it achieves state-of-the-art per-
+formance on all 12 downstream datasets measured
+by ROUGE scores. Our model also shows surpris-
+ing performance on low-resource summarization,
+surpassing previous state-of-the-art results on 6
+datasets with only 1000 examples. Finally we
+validated our results using human evaluation and
+show that our model summaries achieve human
+performance on multiple datasets.
+*Equal contribution1Data Science Institute, Imperial
+College London, London, UK2Brain Team, Google Re-
+search, Mountain View, CA, USA. Correspondence to:
+Jingqing Zhang <jingqing.zhang15@imperial.ac.uk >,
+Yao Zhao <yaozhaoyz@google.com >, Mohammad Saleh
+<msaleh@google.com >, Peter J. Liu <peterjliu@google.com >.
+Proceedings of the 37thInternational Conference on Machine
+Learning , Vienna, Austria, PMLR 119, 2020. Copyright 2020 by
+the author(s).
+Figure 1: The base architecture of PEGASUS is a standard
+Transformer encoder-decoder. Both GSG and MLM are
+applied simultaneously to this example as pre-training ob-
+jectives. Originally there are three sentences. One sentence
+is masked with [MASK1] and used as target generation text
+(GSG). The other two sentences remain in the input, but
+some tokens are randomly masked by [MASK2] (MLM).
 1 Introduction
 Text summarization aims at generating accurate and concise
 summaries from input document(s). In contrast to extractive

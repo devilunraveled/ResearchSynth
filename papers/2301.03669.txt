@@ -1,6 +1,30 @@
+Draft version January 11, 2023
+Typeset using L ATEX default style in AASTeX631
+Moist convection is most vigorous at intermediate atmospheric humidity
+Jacob T. Seeley1and Robin D. Wordsworth1
+1Department of Earth and Planetary Sciences
+Harvard University
+Cambridge, MA 02461, USA
+ABSTRACT
+In Earth's current climate, moist convective updraft speeds increase with surface warming. This
+trend suggests that very vigorous convection might be the norm in extremely hot and humid atmo-
+spheres, such as those undergoing a runaway greenhouse transition. However, theoretical and numerical
+evidence suggests that convection is actually gentle in water vapor-dominated atmospheres, implying
+that convective vigor may peak at some intermediate humidity level. Here, we perform small-domain
+convection-resolving simulations of an Earth-like atmosphere over a wide range of surface temperatures
+and conrm that there is indeed a peak in convective vigor, which we show occurs near Ts'330 K.
+We show that a similar peak in convective vigor exists when the relative abundance of water vapor
+is changed by varying the amount of background (non-condensing) gas at xed Ts, which may have
+implications for Earth's climate and atmospheric chemistry during the Hadean and Archean. We also
+show that Titan-like thermodynamics (i.e., a thick nitrogen atmosphere with condensing methane and
+low gravity) produce a peak in convective vigor at Ts'95 K, which is curiously close to the current
+surface temperature of Titan. Plotted as functions of the saturation specic humidity at cloud base,
+metrics of convective vigor from both Earth-like and Titan-like experiments all peak when cloud-base
+air contains roughly 10% of the condensible gas by mass. Our results point to a potentially common
+phenomenon in terrestrial atmospheres: that moist convection is most vigorous when the condensible
+component is between dilute and non-dilute abundance.
 1.INTRODUCTION
-Moist convection produces some of the most impactful weather and climate phenomena on Earth, from re
-ective
+Moist convection produces some of the most impactful weather and climate phenomena on Earth, from reective
 stratocumulus layers to drenching seasonal monsoons. A longstanding challenge in climate science is to improve the
 crude treatment of such convective phenomena in general circulation models, which hampers predictions of critical
 quantities such as changes in local precipitation and the sensitivity of Earth's climate to CO 2. Looking beyond Earth,
@@ -14,8 +38,7 @@ In this paper, we take a step toward a more generalized understanding of moist c
 its most basic characteristics: convective vigor, or the buoyancy and vertical velocity of cloud updrafts (e.g., Zipser
 et al. 2006; Hansen & Back 2015; Hansen et al. 2020). Updraft speeds aect instantaneous surface precipitation
 rates (Muller & Takayabu 2020) and the fraction of cloud condensate that is lofted instead of falling to the surface,
-which in turn exerts a strong in
-uence on cloud cover and climate sensitivity (Zhao 2014, 2016). More vigorous
+which in turn exerts a strong inuence on cloud cover and climate sensitivity (Zhao 2014, 2016). More vigorous
 updrafts are more likely to overshoot the tropopause and inject near-surface air into the stratosphere, thereby aecting
 stratospheric humidity and chemistry (Liu et al. 2020; O'Neill et al. 2021) and planetary water loss on geologic
 timescales (Wordsworth & Pierrehumbert 2013). Lightning, which is closely associated with high updraft speeds
@@ -44,8 +67,7 @@ support from the work of Tan et al. (2021), who conducted idealized convection-r
 atmospheres with surface temperatures of 600{800 K and found quiescent condensing layers with small temperature
 variability and weak updrafts. Hence the line of reasoning in the \gentle pure-steam limit" is:
 very high humidity !unique relationship between Tandp!low convective vigor :
-Clearly, \warming-driven invigoration", when extrapolated to very warm temperatures, con
-icts with the \gentle pure-
+Clearly, \warming-driven invigoration", when extrapolated to very warm temperatures, conicts with the \gentle pure-
 steam limit". Taken together, these paradigms suggest that convective vigor should reach a peak at some intermediate
 humidity level.
 In this paper, we seek to generalize our understanding of moist convective vigor by lling the gap between these
@@ -54,14 +76,12 @@ contemporary Earth in terms of their surface temperature, surface pressure, grav
 These atmospheres span the parameter space from highly dilute to non-dilute conditions, allowing us to continuously
 probe the transitional behavior between the two paradigms for convective vigor. To circumvent the inherent uncertainty
 of convective parameterizations and allow detailed analysis of convective dynamics, we performed these simulations
-with a 
-exible convection-resolving model (described in detail in section 2). We analyze metrics of convective vigor
+with a exible convection-resolving model (described in detail in section 2). We analyze metrics of convective vigor
 in these atmospheres, and show that our results match the predictions of an analytical theory for radiative-convective
 equilibrium (RCE) originally developed in the context of Earth's tropics (Romps 2016) (hereafter, R16). The analytical
 theory of R16 predicts the mean CAPE of a convecting atmosphere, and we show that this theory provides a unifying
 theoretical framework that links the two paradigms for convective vigor.
-The outline of the paper is as follows. In section 2, we describe the 
-exible convection-resolving model and our
+The outline of the paper is as follows. In section 2, we describe the exible convection-resolving model and our
 numerical experiments. Section 3 analyzes convective vigor in the simulated atmospheres. In section 4, we apply the
 theory of R16 to our results. We conclude in section 5 with a discussion of the implications of our work for early Earth
 and other planetary atmospheres.
@@ -96,12 +116,10 @@ idealized tropospheric radiative cooling using an equation of the form:
  @
 @TF=(T Tt); (1)
 whereTis the temperature, the temperature derivative @=@T is a vertical derivative, (W/m2/K2) is a constant
-setting the magnitude of radiative forcing, F(W/m2) is the net upward radiative 
-ux, and Tt(K) is the prescribed
+setting the magnitude of radiative forcing, F(W/m2) is the net upward radiative ux, and Tt(K) is the prescribed
 tropopause temperature. Numerically, we approximated the vertical derivative @=@T with a centered nite dierence
 on the model's vertical grid. Equation 1 was proposed by Jeevanjee & Romps (2018) as a t to the invariant radiative
-
-ux divergence curve found for Earth, and has been used as an idealized representation of tropospheric radiative
+ux divergence curve found for Earth, and has been used as an idealized representation of tropospheric radiative
 cooling in more recent work (Jeevanjee & Zhou 2022). We used equation (1) to prescribe radiative forcing for both
 Earth-like and Titan-like experiments, although we used dierent values of the parameters (Table 1). At altitudes
 above the tropopause, temperatures were simply nudged to Tton a timescale of 6 hours; since our focus is on convective
@@ -178,11 +196,8 @@ The values assigned to these and other physical constants determine whether DAM 
 atmospheric composition and moist thermodynamics (Table 1). For our Earth-like conguration, dry air is assumed to
 be a mixture of 80% N 2and 20% O 2, while the condensible component is water (H 2O). For the Titan-like conguration,
 dry air is assumed to be entirely N 2and the condensible component is methane (CH 4).
-2.6. Surface 
-uxes
-Surface 
-uxes were modeled with bulk aerodynamic formulae. Specically, the surface latent and sensible heat 
-uxes
+2.6. Surface uxes
+Surface uxes were modeled with bulk aerodynamic formulae. Specically, the surface latent and sensible heat uxes
 (LHF and SHF) were given by
 LHF(x;y) =1(x;y)CDp
 u1(x;y)2+v1(x;y)2+V2Le[q
@@ -193,8 +208,7 @@ where1,q1,u1,v1, andT1are the density, specic humidity, horizontal winds, and 
 level,CD= 1:510 3is a drag coecient, V= 5 m/s is a background \gustiness", Leis the latent heat of evaporation,
 cpis the specic heat capacity at constant pressure of moist air, and q
 sis the saturation specic humidity at the sea
-surface temperature and surface pressure. Since the time-mean surface enthalpy 
-ux is constrained by the (imposed)
+surface temperature and surface pressure. Since the time-mean surface enthalpy ux is constrained by the (imposed)
 tropospheric radiative cooling, the values of CDandVdetermine the near-surface air-sea enthalpy disequilibrium but
 do not otherwise aect our results.
 3.RESULTS
@@ -364,13 +378,10 @@ conservation of mass in the bulk-plume model is expressed as
 @M
 @z=e d
 =M(" ); (9)
-whereM(kg/m2/s) is the upward convective mass 
-ux (equal and opposite, in RCE, to the subsidence mass 
-ux in
+whereM(kg/m2/s) is the upward convective mass ux (equal and opposite, in RCE, to the subsidence mass ux in
 the environmental plume), eandd(kg/m3/s) are the mass entrainment and detrainment rates, and "and(m 1)
 are known as the fractional entrainment and detrainment rates, dened as e=M andd=M, respectively. Equation (9)
-implies that the convective mass 
-ux increases with height if entrainment outpaces detrainment, and vice versa.
+implies that the convective mass ux increases with height if entrainment outpaces detrainment, and vice versa.
 The second bulk-plume equation we will use is the conservation equation for moist static energy h, which is conven-
 tionally dened as h=cpT+gz+Lqv. Herecp(J/kg/K) is the specic heat capacity of air at constant pressure, L
 (J/kg) is the latent heat of evaporation, and the other symbols take their usual meaning. While this is an approxi-
@@ -400,19 +411,14 @@ saturation decit of the environment, (1  R)q
 v(Seeley & Romps 2015).
 Although SO13 treated the environmental relative humidity, R, as an external parameter that must be specied,
 analysis of the bulk-plume water budget can yield a self-consistent analytic expression for R(Romps 2014):
-R=+
- "
-+
- ": (12)
+R=+ "
++ ": (12)
 In equation 12, is a nondimensional parameter specifying the fraction of condensates formed at a given height that
 evaporate at that height instead of precipitating out of the atmosphere (i.e., the precipitation eciency of the bulk-
-plume convection is 1  ). The quantity 
-is the water vapor lapse rate, dened as 
- @lnq
+plume convection is 1  ). The quantity is the water vapor lapse rate, dened as  @lnq
 v=@zand expressed in
 terms of thermodynamic parameters as
-
-=L 
+=L 
 RvT2 g
 RT; (13)
 whereRvandR(J/kg/K) are the specic gas constants for water vapor and dry air, respectively. The expression
@@ -432,13 +438,11 @@ a= 0 corresponds to undiluted convection. Plugging in equations (14{15) to the r
 yields
 @h
 @z= a
-1 +a
-Lq
+1 +aLq
 v: (16)
 We can obtain a second equation for @h=@zby dierentiating the expression for hdirectly:
 @h
-@z= cp  +g 
-Lq
+@z= cp  +g Lq
 v
 =g
 1 +q
@@ -449,8 +453,7 @@ cp+q
 vL2
 RvT2
 ; (17)
-where the second line follows from substituting equation (13) for 
-. Equating the right-hand sides of equations (16)
+where the second line follows from substituting equation (13) for . Equating the right-hand sides of equations (16)
 and (17) and solving for  , we obtain
   =g
 cp1 +a+q
@@ -569,8 +572,7 @@ required to investigate this possibility.
 2021).13
 Furthermore, because the rate of lightning strikes in planetary atmospheres is believed to depend in part on convective
 vigor, these results may also have important implications for lightning-driven atmospheric chemistry. Romps et al.
-(2014) proposed that the lightning 
-ash rate on modern Earth is proportional to the product of CAPE and precipitation
+(2014) proposed that the lightning ash rate on modern Earth is proportional to the product of CAPE and precipitation
 rate. If this relation is robust across wide ranges of planetary conditions, it implies that the importance of lightning
 chemistry would be strongly enhanced in atmospheres with intermediate specic humidity. Because both surface
 temperature and atmospheric pressure may have varied signicantly on Earth in the Hadean, this has interesting
@@ -613,13 +615,10 @@ Ts= 300 K,q
 vs= 20 g/kg, L= 2:5106J/kg, andTt= 200 K, equation A1 predicts CAPE '2500 J/kg, which is
 indeed a typical value for convectively-active parts of Earth's tropics (Riemann-Campe et al. 2009).
 B.SUPPLEMENTAL FIGURES
-7Specically, a=PE=
-, where(1/m) is the fractional entrainment rate, the precipitation eciency PE is dened as the ratio of net
-condensation to gross condensation (assumed constant throughout the troposphere), and 
- @zlogq
+7Specically, a=PE=, where(1/m) is the fractional entrainment rate, the precipitation eciency PE is dened as the ratio of net
+condensation to gross condensation (assumed constant throughout the troposphere), and  @zlogq
 v(1/m) is the saturation water-vapor
-lapse rate. One of the assumptions made by R16 for analytical tractability is that /
-, so thatais constant.14
+lapse rate. One of the assumptions made by R16 for analytical tractability is that /, so thatais constant.14
 275 285 295 305 315 325 335 345 355 365
 SST (K)05101520253035CAPE (kJ/kg)pseudoadiabatic
 L=5 km
