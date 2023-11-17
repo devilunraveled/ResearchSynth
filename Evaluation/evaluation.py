@@ -23,6 +23,8 @@ def rougeScores(df):
         rougeScores['rougeL'].append(score.rougeScore()['rougeL'])
 
         row['rouge1'] = score.rougeScore()['rouge1'].fmeasure
+        row['rouge2'] = score.rougeScore()['rouge2'].fmeasure
+        row['rougeL'] = score.rougeScore()['rougeL'].fmeasure
 
         return row
     
