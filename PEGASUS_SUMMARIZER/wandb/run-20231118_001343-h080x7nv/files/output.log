@@ -1,0 +1,139 @@
+
+Downloading config.json: 100%|██████████| 1.49k/1.49k [00:00<00:00, 3.80MB/s]
+You are using a model of type pegasus_x to instantiate a model of type pegasus. This is not supported for all configurations of models and can yield errors.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  0%|          | 0/152277 [35:49<?, ?it/s]████| 1.09G/1.09G [06:10<00:00, 2.95MB/s]
+Some weights of PegasusForConditionalGeneration were not initialized from the model checkpoint at google/pegasus-x-base and are newly initialized: ['model.decoder.layers.3.encoder_attn.q_proj.bias', 'model.encoder.layers.2.self_attn.v_proj.bias', 'model.decoder.layers.9.encoder_attn.v_proj.bias', 'model.decoder.layers.8.self_attn.v_proj.bias', 'model.decoder.layers.4.self_attn.q_proj.bias', 'model.encoder.layers.3.self_attn.out_proj.bias', 'model.decoder.layers.2.encoder_attn.q_proj.bias', 'model.decoder.layers.0.self_attn.v_proj.bias', 'model.decoder.layers.7.self_attn.k_proj.bias', 'model.encoder.layers.5.self_attn.q_proj.bias', 'model.encoder.layers.9.self_attn.out_proj.bias', 'model.decoder.layers.7.self_attn.q_proj.bias', 'model.decoder.layers.5.encoder_attn.q_proj.bias', 'model.decoder.layers.8.self_attn.k_proj.bias', 'model.decoder.layers.2.self_attn.v_proj.bias', 'model.decoder.layers.7.encoder_attn.v_proj.bias', 'model.decoder.layers.4.encoder_attn.out_proj.bias', 'model.decoder.layers.1.encoder_attn.k_proj.bias', 'model.encoder.layers.6.self_attn.q_proj.bias', 'model.decoder.layers.0.self_attn.k_proj.bias', 'model.encoder.layers.11.self_attn.v_proj.bias', 'model.decoder.layers.8.encoder_attn.out_proj.bias', 'model.decoder.layers.11.encoder_attn.v_proj.bias', 'model.encoder.layers.8.self_attn.q_proj.bias', 'model.decoder.layers.0.self_attn.q_proj.bias', 'model.encoder.layers.5.self_attn.v_proj.bias', 'model.encoder.layers.1.self_attn.v_proj.bias', 'model.encoder.layers.2.self_attn.q_proj.bias', 'model.encoder.layers.5.self_attn.out_proj.bias', 'model.decoder.layers.11.encoder_attn.k_proj.bias', 'model.decoder.layers.8.self_attn.q_proj.bias', 'model.decoder.layers.7.self_attn.v_proj.bias', 'model.encoder.layers.8.self_attn.out_proj.bias', 'model.decoder.layers.1.self_attn.v_proj.bias', 'model.decoder.layers.7.self_attn.out_proj.bias', 'model.decoder.layers.11.self_attn.k_proj.bias', 'model.decoder.layers.4.encoder_attn.k_proj.bias', 'model.decoder.layers.4.encoder_attn.v_proj.bias', 'model.encoder.layers.5.self_attn.k_proj.bias', 'model.decoder.layers.3.encoder_attn.k_proj.bias', 'model.encoder.layers.7.self_attn.k_proj.bias', 'model.decoder.layers.0.encoder_attn.out_proj.bias', 'model.decoder.layers.11.encoder_attn.out_proj.bias', 'model.encoder.layers.7.self_attn.v_proj.bias', 'model.decoder.layers.11.self_attn.out_proj.bias', 'model.decoder.layers.9.self_attn.k_proj.bias', 'model.encoder.layers.8.self_attn.v_proj.bias', 'model.decoder.embed_positions.weight', 'model.encoder.layers.4.self_attn.k_proj.bias', 'model.decoder.layers.2.self_attn.out_proj.bias', 'model.decoder.layers.5.encoder_attn.out_proj.bias', 'model.decoder.layers.9.self_attn.q_proj.bias', 'model.decoder.layers.5.encoder_attn.v_proj.bias', 'model.decoder.layers.6.self_attn.q_proj.bias', 'model.encoder.layers.4.self_attn.v_proj.bias', 'model.decoder.layers.4.self_attn.k_proj.bias', 'model.decoder.layers.10.self_attn.k_proj.bias', 'model.encoder.layers.0.self_attn.v_proj.bias', 'model.decoder.layers.10.encoder_attn.k_proj.bias', 'model.encoder.layers.11.self_attn.q_proj.bias', 'model.decoder.layers.3.encoder_attn.out_proj.bias', 'model.decoder.layers.10.self_attn.out_proj.bias', 'model.decoder.layers.6.self_attn.out_proj.bias', 'model.decoder.layers.10.encoder_attn.out_proj.bias', 'model.encoder.embed_positions.weight', 'model.encoder.layers.10.self_attn.v_proj.bias', 'model.decoder.layers.8.self_attn.out_proj.bias', 'model.encoder.layers.4.self_attn.out_proj.bias', 'model.decoder.layers.0.encoder_attn.k_proj.bias', 'model.decoder.layers.3.self_attn.v_proj.bias', 'model.decoder.layers.11.self_attn.v_proj.bias', 'model.decoder.layers.2.encoder_attn.k_proj.bias', 'model.decoder.layers.5.self_attn.q_proj.bias', 'model.decoder.layers.8.encoder_attn.q_proj.bias', 'model.decoder.layers.5.self_attn.out_proj.bias', 'model.decoder.layers.1.encoder_attn.v_proj.bias', 'model.decoder.layers.1.self_attn.out_proj.bias', 'model.decoder.layers.2.self_attn.k_proj.bias', 'model.decoder.layers.4.self_attn.out_proj.bias', 'model.decoder.layers.1.encoder_attn.out_proj.bias', 'model.decoder.layers.1.encoder_attn.q_proj.bias', 'model.decoder.layers.5.encoder_attn.k_proj.bias', 'model.decoder.layers.11.self_attn.q_proj.bias', 'model.encoder.layers.10.self_attn.q_proj.bias', 'model.encoder.layers.9.self_attn.k_proj.bias', 'model.decoder.layers.6.self_attn.v_proj.bias', 'model.encoder.layers.9.self_attn.v_proj.bias', 'model.decoder.layers.8.encoder_attn.v_proj.bias', 'model.encoder.layers.2.self_attn.out_proj.bias', 'model.decoder.layers.6.encoder_attn.k_proj.bias', 'model.decoder.layers.0.encoder_attn.v_proj.bias', 'model.decoder.layers.5.self_attn.v_proj.bias', 'model.encoder.layers.10.self_attn.k_proj.bias', 'model.encoder.layers.8.self_attn.k_proj.bias', 'model.encoder.layers.6.self_attn.out_proj.bias', 'model.decoder.layers.6.self_attn.k_proj.bias', 'model.decoder.layers.3.self_attn.q_proj.bias', 'model.encoder.layers.11.self_attn.k_proj.bias', 'model.decoder.layers.10.encoder_attn.v_proj.bias', 'model.encoder.layers.0.self_attn.k_proj.bias', 'model.decoder.layers.9.encoder_attn.q_proj.bias', 'model.decoder.layers.5.self_attn.k_proj.bias', 'model.encoder.layers.7.self_attn.q_proj.bias', 'model.encoder.layers.0.self_attn.q_proj.bias', 'model.decoder.layers.10.self_attn.q_proj.bias', 'model.decoder.layers.4.self_attn.v_proj.bias', 'model.decoder.layers.3.self_attn.k_proj.bias', 'model.encoder.layers.1.self_attn.out_proj.bias', 'model.decoder.layers.11.encoder_attn.q_proj.bias', 'model.decoder.layers.6.encoder_attn.q_proj.bias', 'model.encoder.layers.6.self_attn.k_proj.bias', 'model.encoder.layers.0.self_attn.out_proj.bias', 'model.decoder.layers.7.encoder_attn.k_proj.bias', 'model.decoder.layers.9.self_attn.v_proj.bias', 'model.decoder.layers.6.encoder_attn.out_proj.bias', 'model.decoder.layers.8.encoder_attn.k_proj.bias', 'model.encoder.layers.7.self_attn.out_proj.bias', 'model.decoder.layers.2.self_attn.q_proj.bias', 'model.encoder.layers.1.self_attn.q_proj.bias', 'model.decoder.layers.6.encoder_attn.v_proj.bias', 'model.decoder.layers.3.self_attn.out_proj.bias', 'model.encoder.layers.1.self_attn.k_proj.bias', 'model.decoder.layers.1.self_attn.q_proj.bias', 'model.decoder.layers.10.encoder_attn.q_proj.bias', 'model.encoder.layers.3.self_attn.q_proj.bias', 'model.encoder.layers.10.self_attn.out_proj.bias', 'model.encoder.layers.2.self_attn.k_proj.bias', 'model.decoder.layers.0.encoder_attn.q_proj.bias', 'model.encoder.layers.9.self_attn.q_proj.bias', 'model.encoder.layers.6.self_attn.v_proj.bias', 'model.decoder.layers.0.self_attn.out_proj.bias', 'model.decoder.layers.2.encoder_attn.out_proj.bias', 'model.decoder.layers.2.encoder_attn.v_proj.bias', 'model.decoder.layers.3.encoder_attn.v_proj.bias', 'model.decoder.layers.7.encoder_attn.out_proj.bias', 'model.decoder.layers.10.self_attn.v_proj.bias', 'model.decoder.layers.4.encoder_attn.q_proj.bias', 'model.decoder.layers.9.encoder_attn.k_proj.bias', 'model.decoder.layers.1.self_attn.k_proj.bias', 'model.encoder.layers.3.self_attn.v_proj.bias', 'model.decoder.layers.9.encoder_attn.out_proj.bias', 'model.decoder.layers.9.self_attn.out_proj.bias', 'model.decoder.layers.7.encoder_attn.q_proj.bias', 'model.encoder.layers.4.self_attn.q_proj.bias', 'model.encoder.layers.3.self_attn.k_proj.bias', 'model.encoder.layers.11.self_attn.out_proj.bias']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Downloading generation_config.json: 100%|██████████| 262/262 [00:00<00:00, 913kB/s]
+Model loaded
+Tokenizer loaded
+No config specified, defaulting to: arxiv-summarization/section
+Found cached dataset arxiv-summarization (/home/ashmitchamoli/.cache/huggingface/datasets/ccdv___arxiv-summarization/section/1.0.0/fa2c9abf4312afb8660ef8e041d576b8e3943ea96ae771bd3cd091b5798e7cc3)
+  0%|          | 0/3 [00:00<?, ?it/s]
+Dataset loaded
+DatasetDict({
+    train: Dataset({
+        features: ['article', 'abstract'],
+        num_rows: 203037
+    })
+    validation: Dataset({
+        features: ['article', 'abstract'],
+        num_rows: 6436
+    })
+    test: Dataset({
+        features: ['article', 'abstract'],
+        num_rows: 6440
+    })
+})
+Dataset tokenized
+100%|██████████| 3/3 [00:00<00:00, 14.19it/s]
+Loading cached processed dataset at /home/ashmitchamoli/.cache/huggingface/datasets/ccdv___arxiv-summarization/section/1.0.0/fa2c9abf4312afb8660ef8e041d576b8e3943ea96ae771bd3cd091b5798e7cc3/cache-42c98eee354e4cb4_*_of_00010.arrow
+Loading cached processed dataset at /home/ashmitchamoli/.cache/huggingface/datasets/ccdv___arxiv-summarization/section/1.0.0/fa2c9abf4312afb8660ef8e041d576b8e3943ea96ae771bd3cd091b5798e7cc3/cache-3ee39321134c9d57_*_of_00010.arrow
+
+  0%|          | 1/152277 [00:01<50:01:41,  1.18s/it]
+Starting training

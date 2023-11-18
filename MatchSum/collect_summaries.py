@@ -13,8 +13,8 @@ datasetLoader.datasetName = 'pubmed'
 pubmed_test = datasetLoader.getData('../Datasets/', split='test')
 
 # pick only the first 1000 rows from the dataframes
-arxiv_test = arxiv_test[:1000]
-pubmed_test = pubmed_test[:1000]
+arxiv_test = arxiv_test[:100]
+pubmed_test = pubmed_test[:100]
 
 # creating 'Gold Summary' column
 def mapping(row):
@@ -27,13 +27,14 @@ pubmed_test = pubmed_test.apply(mapping, axis=1)
 # loading the model
 from sentence_transformers import SentenceTransformer
 model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
+model2 = SentenceTransformer('ArtifactAI/arxiv-distilbert-base-v3-GenQ')
 n_gram_size = 2
-summary_size = 8
+summary_size = 10
 
 # generating summaries
 def generateSummary(row):
     article = ''.join(row['article_text'])
-    summarizer = MatchSummarizer(article, n_gram_size, model=model)
+    summarizer = MatchSummarizer(article, n_gram_size, model)
     summary = summarizer.generateSummary(summary_size)
     row['Generated Summary'] = summary
     print(f"Generated summary for {row['article_id']}.")

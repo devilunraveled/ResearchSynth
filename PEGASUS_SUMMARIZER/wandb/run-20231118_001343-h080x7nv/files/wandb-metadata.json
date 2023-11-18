@@ -1,0 +1,127 @@
+{
+    "os": "Linux-6.2.13-302.rog.fc37.x86_64-x86_64-with-glibc2.36",
+    "python": "3.11.6",
+    "heartbeatAt": "2023-11-17T18:43:45.236691",
+    "startedAt": "2023-11-17T18:43:43.911535",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "<python with no main file>",
+    "codePathLocal": null,
+    "git": {
+        "remote": "git@github.com:devilunraveled/ResearchSynth.git",
+        "commit": "5e52ef888829768c28ca77f7c462479ab16c7e16"
+    },
+    "email": "ashmitchamoli@outlook.com",
+    "root": "/home/ashmitchamoli/Desktop/Projects/IRE_Project/ResearchSynth",
+    "host": "fedora",
+    "username": "ashmitchamoli",
+    "executable": "/bin/python",
+    "cpu_count": 8,
+    "cpu_count_logical": 16,
+    "cpu_freq": {
+        "current": 3569.9209375,
+        "min": 1200.0,
+        "max": 3300.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 4466.484,
+            "min": 1200.0,
+            "max": 3300.0
+        },
+        {
+            "current": 3595.054,
+            "min": 1200.0,
+            "max": 3300.0
+        },
+        {
+            "current": 4466.942,
+            "min": 1200.0,
+            "max": 3300.0
+        },
+        {
+            "current": 3550.328,
+            "min": 1200.0,
+            "max": 3300.0
+        },
+        {
+            "current": 2219.66,
+            "min": 1200.0,
+            "max": 3300.0
+        },
+        {
+            "current": 4132.363,
+            "min": 1200.0,
+            "max": 3300.0
+        },
+        {
+            "current": 3013.293,
+            "min": 1200.0,
+            "max": 3300.0
+        },
+        {
+            "current": 1200.0,
+            "min": 1200.0,
+            "max": 3300.0
+        },
+        {
+            "current": 3564.441,
+            "min": 1200.0,
+            "max": 3300.0
+        },
+        {
+            "current": 3688.53,
+            "min": 1200.0,
+            "max": 3300.0
+        },
+        {
+            "current": 4466.607,
+            "min": 1200.0,
+            "max": 3300.0
+        },
+        {
+            "current": 2595.251,
+            "min": 1200.0,
+            "max": 3300.0
+        },
+        {
+            "current": 3963.6,
+            "min": 1200.0,
+            "max": 3300.0
+        },
+        {
+            "current": 4376.243,
+            "min": 1200.0,
+            "max": 3300.0
+        },
+        {
+            "current": 3724.191,
+            "min": 1200.0,
+            "max": 3300.0
+        },
+        {
+            "current": 3553.559,
+            "min": 1200.0,
+            "max": 3300.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 297.0,
+            "used": 182.0789794921875
+        }
+    },
+    "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+            "memory_total": 6442450944
+        }
+    ],
+    "memory": {
+        "total": 15.015247344970703
+    }
+}
