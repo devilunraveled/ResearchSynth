@@ -4,7 +4,7 @@ sys.path.append('..')
 from transformers import PegasusForConditionalGeneration, PegasusTokenizer
 
 model_name = 'google/pegasus-large'
-preTrainedModel = '../preTrainedModel/'
+preTrainedModel = '/home/devilunraveled/Projects/ResearchSynth/preTrainedModel/'
 
 
 tokenizer = PegasusTokenizer.from_pretrained(model_name)

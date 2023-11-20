@@ -1,4 +1,7 @@
 from Scorer import Score
+from evaluate import load
+
+bertscore = load("bertscore")
 
 def rougeScores(df):
     '''
@@ -9,10 +12,12 @@ def rougeScores(df):
         rougeScores: dictionary with the following keys: 'rouge1', 'rouge2', 'rougeL'. 
                      Each key has a list of corresponding rouge scores for each generated summary.
     '''
+    global bertscore
     rougeScores = {'rouge1': [],
                    'rouge2': [],
-                   'rougeL': []}
-
+                   'rougeL': [], 
+                   'bertScore' : []}
+    
     def mapping(row):
         trueSummary = row['Gold Summary']
         predSummary = row['Generated Summary']
@@ -29,5 +34,6 @@ def rougeScores(df):
         return row
     
     df = df.apply(mapping, axis=1)
+    rougeScores['bertScore'] = bertscore.compute(predictions=list(df['Generated Summary']), references=list(df['Gold Summary']), lang="en")['f1']
 
     return df, rougeScores
