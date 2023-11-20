@@ -1,7 +1,6 @@
-from MatchSummarizer import GetSummary as MatchSumSummary
+from MatchSum import GetSummary as MatchSumSummary
 from SumItUp import GetSummary as SumItUpSummary
 from Pegasus import GetSummary as PEGASUSSummary
-from PegasusLarge import GetSummary as PEGASUSLargeSummary
 
 from parser.parser import *
 
@@ -12,7 +11,6 @@ def generateAllSummaries( researchPaper ):
         SUMMARIES["MatchSum"] = MatchSumSummary(researchPaper)
         SUMMARIES["SumItUp"] = SumItUpSummary(researchPaper)
         SUMMARIES["PEGASUS"] = PEGASUSSummary(researchPaper)
-        SUMMARIES["PEGASUSLarge"] = PEGASUSLargeSummary(researchPaper)
     except Exception as E :
         print("Failed to generate summary")
         print(E)
