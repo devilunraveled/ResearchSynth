@@ -34,6 +34,10 @@ class MatchSummarizer:
 
     def generate_n_grams(self, n, sentences): 
         '''
+        Input:
+            n: the size of the n-grams to generate.
+            sentences: the list of sentences.
+
         returns an array n-grams where n-grams[i] = (ith n-gram, i)
         '''
         return [('.'.join(sentences[i:i+n]), i) for i in range(len(sentences)-n+1)]
@@ -59,6 +63,7 @@ class MatchSummarizer:
                 break
 
         # generate summary
+        n_gram_ids = sorted(n_gram_ids)
         return ".\n".join([self.n_grams[id][0] for id in n_gram_ids])
     
 class MatchSummarizerCmpModel:
