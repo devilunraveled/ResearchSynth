@@ -1,6 +1,9 @@
-<<<<<<< Updated upstream
 */logs/
 */output/
-=======
 ./dataset/*
->>>>>>> Stashed changes
+*/.ipynb_checkpoints/
+2-0326-Pipe-Process-Diagram-PGo-4_3.pptx
+__pycache__/*
+*/__pycache__/
+Datasets/*
+preTrainedModel/
