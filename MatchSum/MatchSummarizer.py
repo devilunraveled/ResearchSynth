@@ -61,38 +61,39 @@ class MatchSummarizer:
         # generate summary
         return ".\n".join([self.n_grams[id][0] for id in n_gram_ids])
     
-# class MatchSummarizer():
-#     def __init__(self, paper, n_gram_size, model=None, cmp_model=None):
-#         '''
-#         paper: the research paper to summarize as a string.
-#         n_gram_size: the size of the n-grams to use for summarization.
-#         model: the model that will return the embedding for a given text.
-#                should have a method `encode` that takes a list of strings 
-#                and returns a list of embeddings.
-#         '''
-#         if model is None:
-#             raise ValueError("model cannot be None.")
-#         if cmp_model is None:
-#             raise ValueError("cmp_model cannot be None.")
+class MatchSummarizerCmpModel():
+    def __init__(self, paper, n_gram_size, sim_model=None, cmp_model=None):
+        '''
+        paper: the research paper to summarize as a string.
+        n_gram_size: the size of the n-grams to use for summarization.
+        model: the model that will return the embedding for a given text.
+               should have a method `encode` that takes a list of strings 
+               and returns a list of embeddings.
+        '''
+        if sim_model is None:
+            raise ValueError("model cannot be None.")
+        if cmp_model is None:
+            raise ValueError("cmp_model cannot be None.")
         
-#         self.model = model
-#         self.cmp_model = cmp_model
-#         self.paper = paper
-#         self.n_gram_size = n_gram_size
+        self.sim_model = sim_model
+        self.cmp_model = cmp_model
+        self.paper = paper
+        self.n_gram_size = n_gram_size
 
-#     def generateSummary(self):
-#         n_vals = [2, 4, 8]
-#         n_sentences = [8, 10]
+    def generateSummary(self):
+        n_vals = [2, 4, 8]
+        n_sentences = [8, 10]
 
-#         best_summary = ""
-#         best_sim = -1
-#         for n in n_vals:
-#             summarizer = BaseSummarizer(self.paper, n, self.model)
-#             for n_sentence in n_sentences:
-#                 summary = summarizer.generateSummary(n_sentence)
-#                 embeddings = self.cmp_model.encode([summary, self.paper], normalize_embeddings=True)
-#                 sim = np.dot(embeddings[0], embeddings[1])
-#                 if sim > best_sim:
-#                     best_sim = sim
-#                     best_summary = summary
-#         return best_summary
+        best_summary = ""
+        best_sim = -1
+
+        for n in n_vals:
+            summarizer = MatchSummarizer(self.paper, n, self.sim_model)
+            for n_sentence in n_sentences:
+                summary = summarizer.generateSummary(n_sentence)
+                embeddings = self.cmp_model.encode([summary, self.paper], normalize_embeddings=True)
+                sim = np.dot(embeddings[0], embeddings[1])
+                if sim > best_sim:
+                    best_sim = sim
+                    best_summary = summary
+        return best_summary
