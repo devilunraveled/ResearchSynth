@@ -95,4 +95,10 @@ class MatchSummarizerCmpModel:
                 if sim > best_sim:
                     best_sim = sim
                     best_summary = summary
-        return best_summary   
+        return best_summary
+
+def GetSummary(paper):
+    from sentence_transformers import SentenceTransformer
+    model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
+    summarizer = MatchSummarizer(paper, 3, model)
+    return summarizer.generateSummary(10)
