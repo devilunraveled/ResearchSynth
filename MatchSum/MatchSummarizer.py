@@ -55,14 +55,14 @@ class MatchSummarizer:
 
             n_gram_ids.append(index)
             k -= self.n_gram_size
-            if k <= 0 or k < self.n_gram_size/2:
+            if k <= 0 or k <= self.n_gram_size/2:
                 break
 
         # generate summary
         return ".\n".join([self.n_grams[id][0] for id in n_gram_ids])
     
-class MatchSummarizerCmpModel():
-    def __init__(self, paper, n_gram_size, sim_model=None, cmp_model=None):
+class MatchSummarizerCmpModel:
+    def __init__(self, paper, sim_model=None, cmp_model=None):
         '''
         paper: the research paper to summarize as a string.
         n_gram_size: the size of the n-grams to use for summarization.
@@ -78,11 +78,10 @@ class MatchSummarizerCmpModel():
         self.sim_model = sim_model
         self.cmp_model = cmp_model
         self.paper = paper
-        self.n_gram_size = n_gram_size
 
     def generateSummary(self):
-        n_vals = [2, 4, 8]
-        n_sentences = [8, 10]
+        n_vals = [2, 4, 6]
+        n_sentences = [8, 12]
 
         best_summary = ""
         best_sim = -1
@@ -96,4 +95,4 @@ class MatchSummarizerCmpModel():
                 if sim > best_sim:
                     best_sim = sim
                     best_summary = summary
-        return best_summary
+        return best_summary   

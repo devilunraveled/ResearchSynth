@@ -1,4 +1,6 @@
 from Scorer import Score
+from evaluate import load
+bertScore = load('bertscore')
 
 def rougeScores(df):
     '''
@@ -26,6 +28,10 @@ def rougeScores(df):
         row['rouge2'] = score.rougeScore()['rouge2'].fmeasure
         row['rougeL'] = score.rougeScore()['rougeL'].fmeasure
 
+        results = bertScore.compute(predictions=[predSummary],
+                                    references=[trueSummary],
+                                    lang='en')
+        row['bertScore'] = results['f1'][0]
         return row
     
     df = df.apply(mapping, axis=1)
